@@ -63,7 +63,8 @@ const data = {
 const doSomethingByStatus = (status) => {} 
 const returnValue = Scalpel({
   target: data,
-  keys: ［'test.content.articles', 'test.content.status']
+  prefix: 'test.content',
+  keys: ［'articles', 'status']
   callback: (articles, status='') => {
     if (Array.isArray(articles) && articles.length>0) {
       console.log('articles', articles);
