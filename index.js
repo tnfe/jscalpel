@@ -1,4 +1,4 @@
-const Scalpel = ({ target, keys, callback, deep }, defaultOpts) => {
+const Jscalpel = ({ target, keys, callback, deep }, defaultOpts) => {
     const nativeToString = Object.prototype.toString;
     const deepCopy = (obj) => {
         const returnObj = {};
@@ -74,4 +74,4 @@ const Scalpel = ({ target, keys, callback, deep }, defaultOpts) => {
     }
 }
 
-export default Scalpel;
+export default Jscalpel;
