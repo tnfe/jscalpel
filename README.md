@@ -13,3 +13,62 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
 ```javascript
   import Jscalpel from 'jscalpel'
 ```
+
+## Example
+
+#### before:
+
+```javascript
+ const data = {
+   test: {
+     id: 1000,
+     content: [
+       {
+         status: '0',
+         articles: []
+       }
+     ]
+   }
+ }
+ // for safe to get articles;
+ if (data.test && data.test.content && data.content.articles) {
+   const articles = data.content.articles;
+   if (Array.isArray(content) && content.length>0) {
+     // 对content进行操作
+   }
+ }
+  if (data.test && data.test.content && data.content.status) {
+   const status = data.content.status;
+   if (typeof status === '0') {
+     // 执行某个操作
+   }
+ }
+```
+
+#### after
+
+```javascript
+import Scalpel from 'jscalpel';
+const data = {
+   test: {
+     id: 1000,
+     content: [
+       {
+         status: '0',
+         articles: []
+       }
+     ]
+   }
+ }
+const doSomethingByStatus = (status) => {} 
+const returnValue = Scalpel({
+  target: data,
+  keys: ［'test.content.articles', 'test.content.status']
+  callback: (articles, status='') => {
+    if (Array.isArray(articles) && articles.length>0) {
+      console.log('articles', articles);
+    }
+    status === '0' && doSomethingByStatus(status);
+  }
+})
+```

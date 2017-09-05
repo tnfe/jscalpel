@@ -1,6 +1,6 @@
 {
   "name": "jscalpel",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A small feature library that makes it easier to manipulate objects",
   "main": "index.js",
   "scripts": {

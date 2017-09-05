@@ -1,4 +1,4 @@
-const Jscalpel = ({ target, keys, callback, deep }, defaultOpts) => {
+const Jscalpel = ({ target, keys, prefix, callback, deep }, defaultOpts) => {
     const nativeToString = Object.prototype.toString;
     const deepCopy = (obj) => {
         const returnObj = {};
@@ -20,6 +20,7 @@ const Jscalpel = ({ target, keys, callback, deep }, defaultOpts) => {
             return obj;
         }
     }
+    const autoCompleteKey = (key) = (`${prefix ? `${prefix}.${key}` : `${key}`}`);
     let defaultValue = null;
     let result = null;
     let epTarget = null;
@@ -38,7 +39,8 @@ const Jscalpel = ({ target, keys, callback, deep }, defaultOpts) => {
         return;
     }
     if (typeof keys === 'string' && keys.length > 0) {
-        keys.split('.').forEach((value, index) => {
+
+        `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
             result= (result ? result[value] : epTarget[value])
         })
         if (callback && typeof callback === 'function') {;
@@ -55,7 +57,7 @@ const Jscalpel = ({ target, keys, callback, deep }, defaultOpts) => {
         keys.forEach((singlePath, index) => {
             result = null;
             if (typeof singlePath === 'string') {
-                singlePath.split('.').forEach((value, index) => {
+                `${autoCompleteKey(singlePath)}`.split('.').forEach((value, index) => {
                     result= (result ? result[value] : epTarget[value])
                 })
                 pResult.push(result);
