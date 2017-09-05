@@ -14,7 +14,7 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
   import Jscalpel from 'jscalpel'
 ```
 
-## Example
+## Example
 
 #### before:
 
