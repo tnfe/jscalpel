@@ -1,5 +1,5 @@
 
-![](./logo/logox2.png)
+![](./logo/logox3.png)
 
 A small feature library that makes it easier to manipulate objects
 
