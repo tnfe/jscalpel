@@ -8,6 +8,14 @@ It is tiny but very useful and can help you handle javascript native objects. Da
 
 jscalpel is little poor, gzip less than **3k**, so a library you can use it anytime, anywhere without worrying about anything.
 
+## Installation
+
+#### Install using npm 
+``` 
+npm install jscalpel --save
+yarn add jscalpel --save
+```
+
 ## Useage
 
 ```javascript
