@@ -21,5 +21,7 @@ yarn add jscalpel --save
 ```javascript
   import Jscalpel from 'jscalpel'
 ```
-
+```javascript
+  <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
+```
 
