@@ -1,34 +1,4 @@
-export const JscalpelType = (value, options) => {
-    const simpleTypes = ['string', 'undefined', 'function', 'number', 'boolean'];
-    if (simpleTypes.indexOf(typeof value)!== -1 ) {
-        return {
-            value,
-            type: typeof value
-        }
-    }
-    if (value + '' === 'null') {
-        return {
-            value,
-            type: 'null'
-        }
-    }
-    if (Array.isArray(value)) {
-        return {
-            value,
-            type: 'array',
-            length: value.length
-        }
-    }
-    if (Object.prototype.toString.call(value) === '[object Object]') {
-        return {
-            value,
-            type: 'object',
-            keys: Object.keys(value),
-            values: Object.values(value)
-        }
-    }
-}
-const Jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins}, defaultOpts) => {
+const Jscalpel = ({ target, keys, prefix, callback, deep }, defaultOpts) => {
     const nativeToString = Object.prototype.toString;
     const deepCopy = (obj) => {
         const returnObj = {};
@@ -72,11 +42,6 @@ const Jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
 
         `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
             result= (result ? result[value] : epTarget[value])
-            if (plugins && Array.isArray(plugins)) {
-                plugins.forEach((plugin, index) => {
-                    result = plugin(result);
-                })
-            }
         })
         if (callback && typeof callback === 'function') {;
             defaultValue = callback.call(null, result, epTarget, keys, defaultOpts);
@@ -94,11 +59,6 @@ const Jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
             if (typeof singlePath === 'string') {
                 `${autoCompleteKey(singlePath)}`.split('.').forEach((value, index) => {
                     result= (result ? result[value] : epTarget[value])
-                    if (plugins && Array.isArray(plugins)) {
-                        plugins.forEach((plugin, index) => {
-                            result = plugin(result);
-                        })
-                    }
                 })
                 pResult.push(result);
             }
