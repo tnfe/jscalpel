@@ -49,7 +49,7 @@
                 }
             };
             var runBtn = document.getElementById('run');
-            runBtn.onclick = function () {
+            runBtn.addEventListener('click, function () {
                 jscalpel({
                     target: data,
                     prefix: 'test.content.0',
@@ -58,7 +58,7 @@
                         alert(groupid);
                     }
                 });
-            }
+            });
         </script>
     </body>
 </html>
