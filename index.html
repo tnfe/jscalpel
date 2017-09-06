@@ -7,8 +7,7 @@
         </title>
     </head>
     <body>
-        <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
-        <script charset="utf-8">
+        <code>
             var data = {
                 id: '10000',
                 test: {
@@ -31,6 +30,35 @@
                     alert(groupid);
                 } 
             })
+        </code>
+        <button id＝'run'>点击运行</button>
+        <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
+        <script charset="utf-8">
+                      var data = {
+                id: '10000',
+                test: {
+                    content: [
+                        {
+                            groupid: '10000',
+                            articles: [{
+                                title: 'jscalpel',
+                                img: 'https://github.com/ihtml5/scalpel/blob/master/logo/logox3.png'
+                            }]
+                        }
+                    ]
+                }
+            }
+            var runBtn = document.getElementById('run');
+            runBtn.onclick = function () {
+                jscalpel({
+                    target: data,
+                    prefix: 'test.content.0',
+                    keys: ['groupid', 'articles'],
+                    callback: function (groupid, articles) {
+                        alert(groupid);
+                    }
+                });
+            }
         </script>
     </body>
 </html>
