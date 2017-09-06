@@ -7,7 +7,7 @@
         </title>
     </head>
     <body>
-        <code>
+        <pre>
             var data = {
                 id: '10000',
                 test: {
@@ -30,11 +30,11 @@
                     alert(groupid);
                 } 
             })
-        </code>
+        </pre>
         <button id＝'run'>点击运行</button>
         <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
         <script charset="utf-8">
-                      var data = {
+            var data = {
                 id: '10000',
                 test: {
                     content: [
@@ -47,7 +47,7 @@
                         }
                     ]
                 }
-            }
+            };
             var runBtn = document.getElementById('run');
             runBtn.onclick = function () {
                 jscalpel({
