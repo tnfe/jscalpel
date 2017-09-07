@@ -8,7 +8,8 @@ export default {
     file: 'dist/jscalpel.min.js',
     format: 'umd',
     exports: 'default',
-    name: 'jscalpel'
+    name: 'jscalpel',
+    sourceMap: true
   },
   plugins: [
     resolve(),

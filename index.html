@@ -26,10 +26,13 @@
                 target: data,
                 prefix: 'test.content.0',
                 keys: ['groupid', 'articles'],
+                dynamicKyes: (keys) => {
+                    return keys.map((key) => `test.content.0.${key}`)
+                },
                 callback: function (groupid, articles) {
                     alert(groupid);
-                } 
-            })
+                }
+            });
         </pre>
         <button id="run">点击运行</button>
         <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
@@ -54,6 +57,9 @@
                     target: data,
                     prefix: 'test.content.0',
                     keys: ['groupid', 'articles'],
+                    dynamicKyes: (keys) => {
+                        return keys.map((key) => `test.content.0.${key}`)
+                    },
                     callback: function (groupid, articles) {
                         alert(groupid);
                     }

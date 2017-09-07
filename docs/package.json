@@ -1,0 +1,19 @@
+{
+  "name": "examples",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "jscalpel": "^0.3.3",
+    "object-assign": "^4.1.1",
+    "prop-types": "^15.5.10",
+    "react": "^16.0.0-beta.5",
+    "react-dom": "^16.0.0-beta.5",
+    "react-scripts": "1.0.13"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

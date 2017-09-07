@@ -24,6 +24,9 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
     let defaultValue = null;
     let result = null;
     let epTarget = null;
+    if (typeof dynamicKeys === 'function') {
+        keys = dynamicKeys(keys) || keys;
+    }
     try {
         epTarget = typeof target === 'string' ? JSON.parse(target) : target;
         if (deep) {
