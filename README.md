@@ -22,7 +22,7 @@ yarn add jscalpel --save
 ```javascript
   import Jscalpel from 'jscalpel'
 ```
-### Es5
+#### Es5
 ```javascript
   <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
 ```
