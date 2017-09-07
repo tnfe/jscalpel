@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>
+            Jscalpel a simple and power lib
+        </title>
+    </head>
+    <body>
+        <pre>
+            var data = {
+                id: '10000',
+                test: {
+                    content: [
+                        {
+                            groupid: '10000',
+                            articles: [{
+                                title: 'jscalpel',
+                                img: 'https://github.com/ihtml5/scalpel/blob/master/logo/logox3.png'
+                            }]
+                        }
+                    ]
+                }
+            }
+            jscalpel({
+                target: data,
+                prefix: 'test.content.0',
+                keys: ['groupid', 'articles'],
+                callback: function (groupid, articles) {
+                    alert(groupid);
+                } 
+            })
+        </pre>
+        <button id="run">点击运行</button>
+        <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
+        <script charset="utf-8">
+            var data = {
+                id: '10000',
+                test: {
+                    content: [
+                        {
+                            groupid: '10000',
+                            articles: [{
+                                title: 'jscalpel',
+                                img: 'https://github.com/ihtml5/scalpel/blob/master/logo/logox3.png'
+                            }]
+                        }
+                    ]
+                }
+            };
+            var runBtn = document.getElementById('run');
+            runBtn.addEventListener('click', function() {
+                jscalpel({
+                    target: data,
+                    prefix: 'test.content.0',
+                    keys: ['groupid', 'articles'],
+                    callback: function (groupid, articles) {
+                        alert(groupid);
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
