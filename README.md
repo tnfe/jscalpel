@@ -11,6 +11,7 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
 ## Installation
 
 #### Install using npm 
+[![jscalpel](https://nodei.co/npm/jscalpel.png)](https://npmjs.org/package/jscalpel)
 ``` 
 npm install jscalpel --save
 yarn add jscalpel --save
