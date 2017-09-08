@@ -8,6 +8,10 @@ It is tiny but very useful and can help you handle javascript native objects. Da
 
 jscalpel is little poor, gzip less than **3k**, so a library you can use it anytime, anywhere without worrying about anything.
 
+## Document
+
+#### View the document please visit [https://a-jie.github.io/scalpel/](https://a-jie.github.io/saclpel/)
+
 ## Installation
 
 #### Install using npm 
