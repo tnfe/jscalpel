@@ -33,6 +33,8 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-latest": "^6.24.1",
     "gulp": "^3.9.1",
-    "http-server": "^0.10.0"
+    "http-server": "^0.10.0",
+    "react": "^16.0.0-rc.2",
+    "react-dom": "^16.0.0-rc.2"
   }
 }

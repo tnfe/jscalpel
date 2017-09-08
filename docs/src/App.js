@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Scalpel, { JscalpelType } from 'jscalpel';
+
 class App extends Component {
   render() {
-    Scalpel({
-      target: {
-        status: '0'
-      },
-      keys: 'status',
-      callback: (status) => {
-        console.log('status', status);
-      },
-      plugins: [JscalpelType]
-    })
     return (
       <div className="App">
         <div className="App-header">
