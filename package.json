@@ -1,9 +1,12 @@
 {
   "name": "jscalpel",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A small feature library that makes it easier to manipulate objects",
   "main": "index.js",
   "scripts": {
+    "start": "http-server",
+    "watch": "browser-sync start --proxy='localhost:8080' --files='*.html, dist/*.js'",
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -3,8 +3,11 @@
     <head>
         <meta charset="utf-8"/>
         <title>
-            Jscalpel a simple and power lib
+            Jscalpel 使操作对象更容易
         </title>
+        <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/solarized_dark.min.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+        <link rel="stylesheet" href="docs/public/assets/css/github.css">
         <style>
             *，
             *::before,
@@ -17,19 +20,19 @@
             body {
                 margin: 0;
                 padding: 0;
+                font-family: '微软雅黑';
             }
             .scalpel-header {
-                height: 80px;
+                /* height: 80px; */
+                text-align: center;
                 background-color: #fff;
-                border-bottom: 1px solid #ddd;
+                /* border-bottom: 1px solid #ddd; */
                 overflow: hidden;
             }
             .scalpel-logo {
-                float: left;
                 margin: 10px;
                 max-width: 100%;
                 height: auto;
-                height: 60px;
             }
             .scalpel-nav {
                 list-style: none;
@@ -67,25 +70,116 @@
             .scalpel-main {
                 padding: 10px;
             }
+
+            .scalpel-section p {
+                color: rgb(0, 158, 136);
+                font-size: 13px;
+            }
+            h3 {
+                max-width: 40px;
+                padding-bottom: 3px;
+                text-align: center;
+                border-bottom: 3px solid rgb(0, 158, 136);
+            }
+            .scalpel-table {
+                border-collapse:collapse;
+            }
+            .scalpel-table td, .scalpel-table th {
+                padding: 8px 10px;
+                border: 1px solid #ddd;
+                text-align: center;
+                vertical-align: middle;
+                color: #333;
+                font-size: 13px;
+            }
+            .scalpel-jsbin {
+                max-width: 1000px;
+            }
         </style>
     </head>
     <body>
         <div class="scalpel-header">
-            <img src="logo/logox3.png" alt="logo" title="logo" class="scalpel-logo"/>
-            <ul class="scalpel-nav">
+            <img src="logo/logox2.png" alt="logo" title="logo" class="scalpel-logo"/>
+            <!-- <ul class="scalpel-nav">
                 <li><a href="#get-started">开始</a></li>
                 <li><a href="#plugins">插件</a></li>
                 <li><a href="#api">api</a></li>
                 <li><a href="#demos">示例</a></li>
                 <li><a href="#demos">贡献</a></a></li>
-            </ul>
+            </ul> -->
         </div>
         <div class="scalpel-main">
-            <h2 id="get-started">开始</h2>
             <h3>安装</h3>
-            <p>
-                文档正在完善中....
-            </p>
+            <div class="scalpel-section">
+                <h5>Es6</h5>
+                <p>npm i jscalpel --save</p>
+                <p>import jscalpel from 'jscalpel'</p>
+                <h5>Es5</h5>
+                <p>
+                    下载
+                    <a href="https://unpkg.com/jscalpel@0.3.4/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a>
+                    在srcipt标签中直接引入
+                </p>
+            </div>
+            <h3>使用</h3>
+            <h5>参数说明</h5>
+            <table class="scalpel-table">
+                <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>默认值</th>
+                        <th>是否必须</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>target</td>
+                        <td>string/object</td>
+                        <td>{}</td>
+                        <td>是</td>
+                    </tr>
+                    <tr>
+                        <td>keys</td>
+                        <td>string/array</td>
+                        <td>''</td>
+                        <td>否</td>
+                    </tr>
+                    <tr>
+                        <td>dynamicKeys</td>
+                        <td>string/object</td>
+                        <td>undefined</td>
+                        <td>否</td>
+                    </tr>
+                    <tr>
+                        <td>callback</td>
+                        <td>function</td>
+                        <td>function () {}</td>
+                        <td>是</td>
+                    </tr>
+                    <tr>
+                        <td>plugins</td>
+                        <td>array</td>
+                        <td>undefined</td>
+                        <td>否</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="scalpel-section">
+                <h3>Demos</h3>
+                <h5>keys</h5>
+                <div class="scalpel-jsbin">
+                    <a class="jsbin-embed" href="http://jsbin.com/dodomay/1/embed?js,console">JS Bin on jsbin.com</a><script src="http://static.jsbin.com/js/embed.min.js?4.0.4"></script>
+                </div>
+                <h5>dynamicKeys</h5>
+                <div class="scalpel-jsbin">
+                    <a class="jsbin-embed" href="http://jsbin.com/dodomay/edit?html,js,console">dynamicKeys</a>
+                </div>
+            </div>
         </div>
+        <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script charset="utf-8">
+            hljs.initHighlightingOnLoad();
+        </script>
     </body>
 </html>
