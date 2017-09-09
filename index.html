@@ -92,9 +92,9 @@
                 color: #333;
                 font-size: 13px;
             }
-            .scalpel-jsbin {
+            /* .scalpel-jsbin {
                 max-width: 1000px;
-            }
+            } */
         </style>
     </head>
     <body>
@@ -129,6 +129,7 @@
                         <th>参数</th>
                         <th>类型</th>
                         <th>默认值</th>
+                        <th>用途</th>
                         <th>是否必须</th>
                     </tr>
                 </thead>
@@ -137,43 +138,50 @@
                         <td>target</td>
                         <td>string/object</td>
                         <td>{}</td>
+                        <td>目标对象</td>
                         <td>是</td>
                     </tr>
                     <tr>
                         <td>keys</td>
                         <td>string/array</td>
                         <td>''</td>
+                        <td>需要访问的一系列路径，可以是单个字符串或者路径数组</td>
+                        <td>否</td>
+                    </tr>
+                    <tr>
+                        <td>prefix</td>
+                        <td>string</td>
+                        <td>undefined</td>
+                        <td>公共前缀，自动为keys加前缀</td>
                         <td>否</td>
                     </tr>
                     <tr>
                         <td>dynamicKeys</td>
                         <td>string/object</td>
                         <td>undefined</td>
+                        <td>常用在react, angular,vue中根据状态的变化生成不同的keys</td>
                         <td>否</td>
                     </tr>
                     <tr>
                         <td>callback</td>
                         <td>function</td>
                         <td>function () {}</td>
+                        <td>分析成功时调用的函数</td>
                         <td>是</td>
                     </tr>
                     <tr>
                         <td>plugins</td>
                         <td>array</td>
                         <td>undefined</td>
+                        <td>对即将传入callback函数的结果进行处理，借鉴webpack和gulp</td>
                         <td>否</td>
                     </tr>
                 </tbody>
             </table>
             <div class="scalpel-section">
                 <h3>Demos</h3>
-                <h5>keys</h5>
                 <div class="scalpel-jsbin">
-                    <a class="jsbin-embed" href="//jsbin.com/dodomay/1/embed?js,console">keys</a><script src="//static.jsbin.com/js/embed.min.js?4.0.4"></script>
-                </div>
-                <h5>dynamicKeys</h5>
-                <div class="scalpel-jsbin">
-                    <a class="jsbin-embed" href="//jsbin.com/dodomay/edit?html,js,console">dynamicKeys</a>
+                    <script async src="//jsfiddle.net/ihtml5/as3tLkdy/5/embed/js/"></script>
                 </div>
             </div>
         </div>
