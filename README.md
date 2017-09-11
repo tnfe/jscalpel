@@ -29,7 +29,7 @@ yarn add jscalpel --save
 ```
 #### Include in html
 ```javascript
-  <script charset="utf-8" src="https://unpkg.com/jscalpel@0.4.0/dist/jscalpel.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/jscalpel@0.4.1/dist/jscalpel.min.js"></script>
 ```
 
 ## Changelog

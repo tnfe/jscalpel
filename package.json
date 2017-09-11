@@ -1,12 +1,12 @@
 {
   "name": "jscalpel",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A small feature library that makes it easier to manipulate objects",
   "main": "index.js",
   "scripts": {
     "start": "http-server",
     "watch": "browser-sync start --proxy='localhost:8080' --files='*.html, dist/*.js'",
-    "build": "rollup -c",
+    "build": "rollup -c ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -28,7 +28,9 @@
     "babel": "^6.23.0",
     "rollup": "^0.49.2",
     "rollup-plugin-babel": "^3.0.2",
-    "rollup-plugin-node-resolve": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "uglify-es": "^3.1.0"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
