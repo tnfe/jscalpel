@@ -29,6 +29,12 @@ yarn add jscalpel --save
 ```
 #### Include in html
 ```javascript
-  <script charset="utf-8" src="https://unpkg.com/jscalpel@0.3.4/dist/jscalpel.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/jscalpel@0.4.0/dist/jscalpel.min.js"></script>
 ```
+
+## Changelog
+
+2017.9.11
+
+在使用dynamicKeys(动态keys)时禁用prefix
 

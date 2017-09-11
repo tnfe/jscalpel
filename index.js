@@ -1,5 +1,6 @@
 const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins}, defaultOpts) => {
     const nativeToString = Object.prototype.toString;
+    let enablePrefix = prefix ? true : false;
     const deepCopy = (obj) => {
         const returnObj = {};
         let tempArr = [];
@@ -20,12 +21,15 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
             return obj;
         }
     }
-    const autoCompleteKey = (key) => (`${prefix ? `${prefix}.${key}` : `${key}`}`);
+    const autoCompleteKey = (key) => {
+        return (`${prefix && enablePrefix ? `${prefix}.${key}` : `${key}`}`);
+    } 
     let defaultValue = null;
     let result = null;
     let epTarget = null;
     if (typeof dynamicKeys === 'function') {
         keys = dynamicKeys(keys) || keys;
+        enablePrefix = false;
     }
     try {
         epTarget = typeof target === 'string' ? JSON.parse(target) : target;
