@@ -10,7 +10,7 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
 
 ## Document
 
-#### View the document please visit [https://ihtml5.github.io/scalpel/](https://ihtml5.github.io/scalpel/)
+#### View the document please visit [https://ihtml5.github.io/jscalpel/](https://ihtml5.github.io/jscalpel/)
 
 ## Installation
 
