@@ -7,7 +7,6 @@
         </title>
         <link rel="stylesheet" href="//yandex.st/highlightjs/8.0/styles/solarized_dark.min.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
-        <link rel="stylesheet" href="docs/public/assets/css/github.css">
         <style>
             *，
             *::before,
@@ -115,7 +114,7 @@
                 <p>npm i jscalpel --save</p>
                 <p>import jscalpel from 'jscalpel'</p>
                 <h5>Es5</h5>
-                <p> 1.下载<a href="https://unpkg.com/jscalpel@0.4.1/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
+                <p> 1.下载<a href="https://unpkg.com/jscalpel@0.5.1/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
                 <p> 2. 在srcipt标签中直接引入</p>
             </div>
             <h3>使用</h3>
@@ -137,6 +136,13 @@
                         <td>{}</td>
                         <td>目标对象</td>
                         <td>是</td>
+                    </tr>
+                    <tr>
+                        <td>deep</td>
+                        <td>boolean</td>
+                        <td>false</td>
+                        <td>是否深度拷贝目标对象</td>
+                        <td>否</td>
                     </tr>
                     <tr>
                         <td>keys</td>
@@ -176,8 +182,24 @@
             </div>
         </div>
         <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
         <script charset="utf-8">
             hljs.initHighlightingOnLoad();
+            var res = {
+                perpons: ['yajieliu', 'thinkchen'],
+                status: '0'
+            };
+            jscalpel({
+                target: res,
+                deep: true,
+                keys: ['perpons', 'status'],
+                callback: function (perpons, status, finalRes, keys) {
+                    // console.clear();
+                    console.log('perpons', perpons);
+                    console.log('finalRes', finalRes, res);
+                    console.log(finalRes === res);
+                }
+            })
         </script>
     </body>
 </html>
