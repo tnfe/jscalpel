@@ -14,7 +14,8 @@ const jscalpelLogic = ({
     if (logicMap[name]) {
         jscalpel({
             target: logicMap,
-            keys: [`${name}.match`, `${name}.success`],
+            prefix: `${name}`,
+            keys: ['match', 'success'],
             callback: (match, success) => {
                 match(value) && success(value);
             }
