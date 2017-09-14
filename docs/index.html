@@ -181,6 +181,28 @@
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="./dist/jscalpel.min.js"></script>
+        <script charset="utf-8" src="../dist/jscalpel.min.js"></script>
+        <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
+        <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
+        <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script>
+        <script charset="utf-8">
+           var data = [{
+               status: '0',
+               data: {
+                   response: {
+                       code: -1,
+                       msg: 'jscalpel'
+                   }
+               }
+           }];
+           jscalpel({
+               target: data,
+               keys: ['0.data.response.code', '0.status'],
+               plugins: [jscalpelType, jscalpelLogic],
+               callback: function (code, status) {
+                   console.log('info:::', code, status);
+               }
+           })
+        </script>
     </body>
 </html>

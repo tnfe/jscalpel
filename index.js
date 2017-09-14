@@ -23,10 +23,29 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
     }
     const autoCompleteKey = (key) => {
         return (`${prefix && enablePrefix ? `${prefix}.${key}` : `${key}`}`);
-    } 
+    }
+    const getParameterNames = (fn) => {
+        var COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+        var DEFAULT_PARAMS = /=[^,]+/mg;
+        var FAT_ARROWS = /=>.*$/mg;
+        var code = fn.toString()
+            .replace(COMMENTS, '')
+            .replace(FAT_ARROWS, '')
+            .replace(DEFAULT_PARAMS, '');
+
+        var result = code.slice(code.indexOf('(') + 1, code.indexOf(')'))
+            .match(/([^\s,]+)/g);
+
+        return result === null
+            ? []
+            : result;
+    }
     let defaultValue = null;
     let result = null;
     let epTarget = null;
+    const cbParams = callback ? getParameterNames(callback) : [];
+    console.log('cbParams', cbParams);
+    let willPluginInfo = {};
     if (typeof dynamicKeys === 'function') {
         keys = dynamicKeys(keys) || keys;
         enablePrefix = false;
@@ -35,8 +54,9 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         epTarget = typeof target === 'string' ? JSON.parse(target) : target;
         if (deep) {
             epTarget = deepCopy(epTarget);
-        } 
-        if (nativeToString.call(epTarget) !== '[object Object]') {
+        }
+
+        if (nativeToString.call(epTarget) !== '[object Object]' && !Array.isArray(epTarget)) {
             console.error('传入的target不是有效的json或者object');
             return;
         }
@@ -48,9 +68,13 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
 
         `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
             result= (result ? result[value] : epTarget[value])
+            willPluginInfo = {
+                value: result,
+                name: cbParams[index]
+            };
             if (plugins && Array.isArray(plugins)) {
                 plugins.forEach((plugin, index) => {
-                    result = plugin(result);
+                    result = plugin(willPluginInfo);
                 })
             }
         })
@@ -65,17 +89,21 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         return defaultValue;
     } else if (nativeToString.call(keys) === '[object Array]') {
         const pResult = [];
-        keys.forEach((singlePath, index) => {
+        keys.forEach((singlePath, idx) => {
             result = null;
             if (typeof singlePath === 'string') {
                 `${autoCompleteKey(singlePath)}`.split('.').forEach((value, index) => {
                     result= (result ? result[value] : epTarget[value])
-                    if (plugins && Array.isArray(plugins)) {
-                        plugins.forEach((plugin, index) => {
-                            result = plugin(result);
-                        })
-                    }
-                })
+                });
+                willPluginInfo = {
+                    value: result,
+                    name: cbParams[idx]
+                }
+                if (plugins && Array.isArray(plugins)) {
+                    plugins.forEach((plugin, index) => {
+                        result = plugin(willPluginInfo);
+                    })
+                }
                 pResult.push(result);
             }
         })
