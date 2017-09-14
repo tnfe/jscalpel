@@ -2,7 +2,6 @@ const jscalpelType = ({
     value,
     name
 }) => {
-    console.log('value:::', value, name);
     const simpleTypes = ['string', 'undefined', 'function', 'number', 'boolean'];
     if (simpleTypes.indexOf(typeof value)!== -1 ) {
         return {

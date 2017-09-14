@@ -25,15 +25,15 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         return (`${prefix && enablePrefix ? `${prefix}.${key}` : `${key}`}`);
     }
     const getParameterNames = (fn) => {
-        var COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-        var DEFAULT_PARAMS = /=[^,]+/mg;
-        var FAT_ARROWS = /=>.*$/mg;
-        var code = fn.toString()
+        const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+        const DEFAULT_PARAMS = /=[^,]+/mg;
+        const FAT_ARROWS = /=>.*$/mg;
+        const code = fn.toString()
             .replace(COMMENTS, '')
             .replace(FAT_ARROWS, '')
             .replace(DEFAULT_PARAMS, '');
 
-        var result = code.slice(code.indexOf('(') + 1, code.indexOf(')'))
+        const result = code.slice(code.indexOf('(') + 1, code.indexOf(')'))
             .match(/([^\s,]+)/g);
 
         return result === null

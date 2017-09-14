@@ -5,12 +5,12 @@ import uglify from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
 export default {
-  input: './plugins/jscalpellogic.js',
+  input: './index.js',
   output: {
-    file: 'dist/plugins/jscalpelLogic.min.js',
+    file: 'dist/jscalpel.min.js',
     format: 'umd',
     exports: 'default',
-    name: 'jscalpelLogic',
+    name: 'jscalpel',
     sourceMap: true
   },
   plugins: [
