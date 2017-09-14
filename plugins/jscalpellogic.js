@@ -1,16 +1,15 @@
+const logicMap = {
+    'code': {
+        match: (value) => value === -1,
+        success: (value) => {
+            alert('code');
+        }
+    }
+}
 const jscalpelLogic = ({
     value,
     name
 }) => {
-    const logicMap = {
-        'code': {
-            match: (value) => value === -1,
-            success: (value) => {
-                alert('code');
-            }
-        }
-    }
-    console.warn('name', value, name);
     if (logicMap[name]) {
         jscalpel({
             target: logicMap,
