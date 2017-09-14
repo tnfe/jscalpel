@@ -36,7 +36,7 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         if (deep) {
             epTarget = deepCopy(epTarget);
         } 
-        if (!nativeToString.call(epTarget) === '[object Object]') {
+        if (nativeToString.call(epTarget) !== '[object Object]') {
             console.error('传入的target不是有效的json或者object');
             return;
         }
