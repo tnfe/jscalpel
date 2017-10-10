@@ -15,17 +15,17 @@
 const data = {
       status: '0',
       test: {
-           article: [{
-                    id: 1,
-                    content: 'article'
-               }]
+          article: [{
+            id: 1,
+            content: 'article'
+          }]
       }
 }
 // 要获取article的值
 if (data.test && data.test.article) {
   const article = data.test.article;
   if (Array.isArray(article)) {
-      // do something
+    // do something
   }
 }
 ```
@@ -118,14 +118,14 @@ Es5
             <td>dynamicKeys</td>
             <td>string/object</td>
             <td>undefined</td>
-            <td>常用在react, angular,vue中根据状态的变化生成不同的keys</td>
+            <td>常用在react, angular,vue中根据状态的变化生成不同的keys; 使用该项时会忽略prefix配置</td>
             <td>否</td>
         </tr>
         <tr>
             <td>callback</td>
             <td>function</td>
-            <td>function () {}</td>
-            <td>分析成功时调用的函数</td>
+            <td>function (@value, ..., @finalTarget, @keys) {}</td>
+            <td>分析成功时调用的函数; @value表示对应要获取key的value值, @finalTarget表示目标对象或目标对象的深度拷贝, @keys表示最终生成的访问路径数组</td>
             <td>是</td>
         </tr>
     </tbody>

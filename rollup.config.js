@@ -17,7 +17,6 @@ export default {
     resolve(),
     babel({
       exclude: 'node_modules/**' // only transpile our source code
-    }),
-    uglify({}, minify)
+    })
   ]
 };
