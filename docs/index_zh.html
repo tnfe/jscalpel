@@ -98,14 +98,14 @@
                 position: fixed;
                 top: 20px;
                 right: 50px;
+                border: 1px solid rgb(0, 158, 136);
                 color: rgb(0, 158, 136);
                 font-weight: 600;
-                padding: 0 10px;
             }
         </style>
     </head>
     <body>
-        <a class="scalpel-toggleLang" href="index_zh.html" alt="english" title="中文文档" target="_blank">中文文档</a>
+        <a class="scalpel-toggleLang" href="http://ihtml5.github.io/index_en.html" alt="english" title="english doc" target="_blank">English</a>
         <div class="scalpel-header">
             <img src="https://github.com/ihtml5/jscalpel/raw/master/logo/logox3.png" alt="logo" title="logo" class="scalpel-logo"/>
             <!-- <ul class="scalpel-nav">
@@ -117,25 +117,25 @@
             </ul> -->
         </div>
         <div class="scalpel-main">
-            <h3>Installation</h3>
+            <h3>安装</h3>
             <div class="scalpel-section">
                 <h5>Es6</h5>
                 <p>npm i jscalpel --save</p>
                 <p>import jscalpel from 'jscalpel'</p>
                 <h5>Es5</h5>
-                <p> 1.download<a href="https://unpkg.com/jscalpel@latest/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
-                <p> 2. directly in the srcipt tag</p>
+                <p> 1.下载<a href="https://unpkg.com/jscalpel@latest/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
+                <p> 2. 在srcipt标签中直接引入</p>
             </div>
-            <h3>Usage</h3>
-            <h5>Parameter Description</h5>
+            <h3>使用</h3>
+            <h5>参数说明</h5>
             <table class="scalpel-table">
                 <thead>
                     <tr>
-                        <th>parameter</th>
-                        <th>type</th>
-                        <th>default value</th>
-                        <th>use</th>
-                        <th>isRequired</th>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>默认值</th>
+                        <th>用途</th>
+                        <th>是否必须</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,43 +143,43 @@
                         <td>target</td>
                         <td>string/object</td>
                         <td>{}</td>
-                        <td>target</td>
-                        <td>true</td>
+                        <td>目标对象</td>
+                        <td>是</td>
                     </tr>
                     <tr>
                         <td>deep</td>
                         <td>boolean</td>
                         <td>false</td>
-                        <td>whether or not to copy the target object in depth</td>
-                        <td>false</td>
+                        <td>是否深度拷贝目标对象</td>
+                        <td>否</td>
                     </tr>
                     <tr>
                         <td>keys</td>
                         <td>string/array</td>
                         <td>''</td>
-                        <td>need to access a series of paths, can be a single string or path array</td>
-                        <td>false</td>
+                        <td>需要访问的一系列路径，可以是单个字符串或者路径数组</td>
+                        <td>否</td>
                     </tr>
                     <tr>
                         <td>prefix</td>
                         <td>string</td>
                         <td>undefined</td>
-                        <td>public prefix, automatically added for the keys</td>
-                        <td>false</td>
+                        <td>公共前缀，自动为keys加前缀</td>
+                        <td>否</td>
                     </tr>
                     <tr>
                         <td>dynamicKeys</td>
                         <td>string/object</td>
                         <td>undefined</td>
-                        <td>commonly used in react, angular, vue in accordance with the state changes in the generation of different keys</td>
-                        <td>false</td>
+                        <td>常用在react, angular,vue中根据状态的变化生成不同的keys</td>
+                        <td>否</td>
                     </tr>
                     <tr>
                         <td>callback</td>
                         <td>function</td>
                         <td>function () {}</td>
-                        <td>The function that was called when the analysis was successful</td>
-                        <td>true</td>
+                        <td>分析成功时调用的函数</td>
+                        <td>是</td>
                     </tr>
                 </tbody>
             </table>
