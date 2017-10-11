@@ -36,9 +36,9 @@ yarn add jscalpel --save
 
 #### 2017.9.11
 
-在使用dynamicKeys(动态keys)时禁用prefix
+Disable prefix when using dynamicKeys (dynamic keys)
 
 #### 2017.9.14
 
-增加jscalpelLogic插件，减少ifelse，使运行逻辑可配置
+Add jscalpelLogic plugin, reduce ifelse, make run logic configurable
 
