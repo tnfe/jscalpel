@@ -5,7 +5,7 @@ import uglify from 'rollup-plugin-uglify';
 import { minify } from 'uglify-es';
 
 export default {
-  entry: './index.js',
+  input: './index.js',
   output: {
     file: 'dist/jscalpel.min.js',
     format: 'umd',

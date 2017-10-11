@@ -45,10 +45,8 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
       // 优化: 如果检测到undefined直接跳出遍历
       let result = target
       let keysPaths = (autoCompleteKey(key)).split('.')
-      console.log('keysPaths', keysPaths)
       for (let i = 0, len = keysPaths.length; i < len; i++) {
         result = result[keysPaths[i]]
-        console.log('进来一次', result)
         if (result === undefined) break
       }
       // fixed: 获取到最终path信息，再进行插件操作
@@ -56,7 +54,6 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         value: result,
         name: key
       };
-      console.log('willPluginInfo1: ', willPluginInfo)
       // 增加校验插件个数，另外这里不判断willPluginInfo.value，是因为即使value为undefined，也可能需要插件处理
       if (plugins && Array.isArray(plugins) && plugins.length) {
         plugins.forEach(function (plugin, index) {
