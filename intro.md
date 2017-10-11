@@ -74,7 +74,13 @@ Es5
 ## 使用
 
 ``` javascript
-jscalpel(<options> [,defaultOpts])
+
+jscalpel(<options>, [defaultOpts])
++ Arguments:
+  - `{Object} options`
+  - `{Object} defaultOpts`
++ Returns:
+  - 如果有callback配置且callback中有return值，则返回其return值；否则返回传递给callback的所有实参 `(@value, ..., @finalTarget, @keys, @defaultOpts)`
 ```
 
 #### options参数说明

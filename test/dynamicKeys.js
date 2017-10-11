@@ -33,12 +33,11 @@ var finalRel = jscalpel({
     // 这是个注释
     console.log('dynamic=>output:', code);
     console.log('rest: ', rest)
-    return 1
     /* 
       我是一个多行注释
       我是第二行
     */ 
   }
-})
+}, {test: 'haha'})
 
 console.log('finalRel: ', finalRel)

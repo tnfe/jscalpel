@@ -103,7 +103,6 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
     } else if (nativeToString.call(keys) === '[object Array]') {
         const pResult = [];
         keys.forEach((singlePath, idx) => {
-            result = null;
             if (typeof singlePath === 'string') {
               let result = getKeyPathValue(singlePath, epTarget, plugins)
               pResult.push(result);
