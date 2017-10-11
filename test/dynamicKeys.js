@@ -1,6 +1,9 @@
 var jscalpel = require('../dist/jscalpel.min')
 // var jscalpel = require('../index')
 
+import jscalpelType from '../plugins/jscalpeltype'
+console.log('is plugin loaded: ', jscalpelType)
+
 const res = {
   data: {
     article: [{
@@ -9,29 +12,33 @@ const res = {
     }]
   },
   response: {
-    code: '0',
+    code: 0,
     msg: 'success'
   }
 }
 
 
 // TODO: 使用dynamicKyes时，callback的keys会带上前缀。而使用prefix时不会带上前缀，这里需要统一下。
-jscalpel({
+var finalRel = jscalpel({
   target: res,
-  // prefix: 'response2',
-  keys: 'response.code',
-  plugins: [],
+  prefix: 'response',
+  keys: ['code'],
+  plugins: [jscalpelType],
+  // callback: undefined,
   // dynamicKeys: (keys) => {
   //   // keys指的是配置的keys['code', 'msg']
   //   return keys.map((key) => `response.${key}`)
   // },
-  // TODO: 这里用rest语法的时候，rest会多一个undefined。
-  callback:  (code) => {
+  callback:  (code, ...rest) => {
     // 这是个注释
     console.log('dynamic=>output:', code);
+    console.log('rest: ', rest)
+    return 1
     /* 
       我是一个多行注释
       我是第二行
     */ 
   }
 })
+
+console.log('finalRel: ', finalRel)

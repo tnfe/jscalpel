@@ -25,9 +25,9 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         return (`${prefix && enablePrefix ? `${prefix}.${key}` : `${key}`}`);
     }
     const getParameterNames = (fn) => {
-        const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-        const DEFAULT_PARAMS = /=[^,]+/mg;
-        const FAT_ARROWS = /=>.*$/mg;
+        const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*\*\/))/mg;
+        const DEFAULT_PARAMS = /=[^,\)]+/mg;
+        const FAT_ARROWS = /=>[\s\S]*/mg;
         const code = fn.toString()
             .replace(COMMENTS, '')
             .replace(FAT_ARROWS, '')
@@ -40,83 +40,84 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
             ? []
             : result;
     }
-    let defaultValue = null;
-    let result = null;
+
+    var getKeyPathValue = function (key, target, plugins) {
+      // 优化: 如果检测到undefined直接跳出遍历
+      let result = target
+      let keysPaths = (autoCompleteKey(key)).split('.')
+      console.log('keysPaths', keysPaths)
+      for (let i = 0, len = keysPaths.length; i < len; i++) {
+        result = result[keysPaths[i]]
+        console.log('进来一次', result)
+        if (result === undefined) break
+      }
+      // fixed: 获取到最终path信息，再进行插件操作
+      let willPluginInfo = {
+        value: result,
+        name: key
+      };
+      console.log('willPluginInfo1: ', willPluginInfo)
+      // 增加校验插件个数，另外这里不判断willPluginInfo.value，是因为即使value为undefined，也可能需要插件处理
+      if (plugins && Array.isArray(plugins) && plugins.length) {
+        plugins.forEach(function (plugin, index) {
+          result = plugin(willPluginInfo);
+        });
+      }
+      return result
+    }
+
+    // 修复dynamicKeys与prefix表现不一致的问题
+    var originalKeys = keys
     let epTarget = null;
     const cbParams = callback ? getParameterNames(callback) : [];
     console.log('cbParams', cbParams);
-    let willPluginInfo = {};
     if (typeof dynamicKeys === 'function') {
         keys = dynamicKeys(keys) || keys;
+        // 有dynamicKeys时禁用prefix
         enablePrefix = false;
     }
-    try {
-        epTarget = typeof target === 'string' ? JSON.parse(target) : target;
-        if (deep) {
-            epTarget = deepCopy(epTarget);
-        }
 
-        if (nativeToString.call(epTarget) !== '[object Object]' && !Array.isArray(epTarget)) {
-            console.error('传入的target不是有效的json或者object');
-            return;
-        }
-    } catch (err) {
-        console.error('传入的target不是有效的json或者object');
+    try {
+      epTarget = typeof target === 'string' ? JSON.parse(target) : target;
+      if (deep) {
+        epTarget = deepCopy(epTarget);
+      }
+
+      if (nativeToString.call(epTarget) !== '[object Object]' && !Array.isArray(epTarget)) {
+        throw new Error();
         return;
+      }
+    } catch (err) {
+      console.error('传入的target不是有效的JSON或target不是Object/Array类型');
+      return;
     }
     if (typeof keys === 'string' && keys.length > 0) {
+      let result = getKeyPathValue(keys, epTarget, plugins)
+      result = [result, epTarget, originalKeys, defaultOpts]
 
-        `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
-            result= (result ? result[value] : epTarget[value])
-            willPluginInfo = {
-                value: result,
-                name: cbParams[index]
-            };
-            if (plugins && Array.isArray(plugins)) {
-                plugins.forEach((plugin, index) => {
-                    result = plugin(willPluginInfo);
-                })
-            }
-        })
-        if (callback && typeof callback === 'function') {;
-            defaultValue = callback.call(null, result, epTarget, keys, defaultOpts);
-        } else {
-            defaultValue = callback;
-        }
-        if (typeof defaultValue === 'undefined') {
-            return result || defaultOpts;
-        }
-        return defaultValue;
+      if (callback && typeof callback === 'function') {
+        return callback.apply(null, result) || result || defaultOpts;
+      } else {
+        return callback || result || defaultOpts
+      }
     } else if (nativeToString.call(keys) === '[object Array]') {
         const pResult = [];
         keys.forEach((singlePath, idx) => {
             result = null;
             if (typeof singlePath === 'string') {
-                `${autoCompleteKey(singlePath)}`.split('.').forEach((value, index) => {
-                    result= (result ? result[value] : epTarget[value])
-                });
-                willPluginInfo = {
-                    value: result,
-                    name: cbParams[idx]
-                }
-                if (plugins && Array.isArray(plugins)) {
-                    plugins.forEach((plugin, index) => {
-                        result = plugin(willPluginInfo);
-                    })
-                }
-                pResult.push(result);
+              let result = getKeyPathValue(singlePath, epTarget, plugins)
+              pResult.push(result);
             }
         })
-        pResult.push(epTarget,keys, defaultOpts);
+        pResult.push(epTarget, originalKeys, defaultOpts);
+        
+        let defaultValue = null
         if (callback && typeof callback === 'function') {
-            defaultValue = callback.apply(null, pResult);
+          defaultValue = callback.apply(null, pResult);
         } else {
-            defaultValue = callback;
+          defaultValue = callback;
         }
-        if (typeof defaultValue === 'undefined') {
-            return pResult || defaultOpts;
-        }
-        return defaultValue;
+        return defaultValue || pResult || defaultOpts;
     }
 }
 

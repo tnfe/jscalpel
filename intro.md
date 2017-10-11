@@ -73,7 +73,11 @@ Es5
 
 ## 使用
 
-#### 参数说明
+``` javascript
+jscalpel(<options> [,defaultOpts])
+```
+
+#### options参数说明
 
 <table class="scalpel-table">
     <thead>
@@ -124,8 +128,8 @@ Es5
         <tr>
             <td>callback</td>
             <td>function</td>
-            <td>function (@value, ..., @finalTarget, @keys) {}</td>
-            <td>分析成功时调用的函数; @value表示对应要获取key的value值, @finalTarget表示目标对象或目标对象的深度拷贝, @keys表示最终生成的访问路径数组</td>
+            <td>function (@value, ..., @finalTarget, @keys, @defaultOpts) {}</td>
+            <td>分析成功时调用的函数; @value表示对应要获取key的value值, @finalTarget表示目标对象或目标对象的深度拷贝, @keys表示最终生成的访问路径数组, @defaultOpts表示默认值</td>
             <td>是</td>
         </tr>
     </tbody>
