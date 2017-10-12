@@ -108,6 +108,30 @@ const jscalpel = ({ target, keys, prefix, callback, success, deep, plugins, erro
     const autoCompleteKey = (key) => {
         return (`${prefix && enablePrefix ? `${prefix}.${key}` : `${key}`}`);
     }
+    const getValuebyKey = function (key, target, plugins) {
+        // 优化: 如果检测到undefined直接跳出遍历
+        let result = target
+        let keysPaths = (autoCompleteKey(key)).split('.')
+        for (let i = 0, len = keysPaths.length; i < len; i++) {
+          result = result[keysPaths[i]]
+          if (result === undefined) {
+              return result;
+          }
+        }
+        // fixed: 获取到最终path信息，再进行插件操作
+        let willPluginInfo = {
+          value: result,
+          name: key
+        };
+        // 增加校验插件个数，另外这里不判断willPluginInfo.value，是因为即使value为undefined，也可能需要插件处理
+        if (plugins && Array.isArray(plugins) && plugins.length) {
+          plugins.forEach(function (plugin, index) {
+              plugin(willPluginInfo);
+          });
+        }
+        return result
+      }
+  
     const getParameterNames = (fn) => {
         const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
         const DEFAULT_PARAMS = /=[^,]+/mg;
@@ -147,44 +171,18 @@ const jscalpel = ({ target, keys, prefix, callback, success, deep, plugins, erro
         return;
     }
     if (typeof keys === 'string' && keys.length > 0) {
-        `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
-            result= (result ? result[value] : epTarget[value])
-            willPluginInfo = {
-                value: result,
-                name: cbParams[index]
-            };
-            if (plugins && Array.isArray(plugins)) {
-                plugins.forEach((plugin, index) => {
-                    plugin(willPluginInfo);
-                })
-            }
-        })
+        result = getValuebyKey(keys, target, plugins)
         if (compatCb && typeof compatCb === 'function') {;
             defaultValue = compatCb.call(null, result, epTarget, keys, defaultOpts);
         } else {
             defaultValue = compatCb;
         }
-        // if (typeof defaultValue === 'undefined') {
-        //     return result || defaultOpts;
-        // }
-        // return defaultValue;
     } else if (nativeToString.call(keys) === '[object Array]') {
         const pResult = [];
         keys.forEach((singlePath, idx) => {
             result = null;
             if (typeof singlePath === 'string') {
-                `${autoCompleteKey(singlePath)}`.split('.').forEach((value, index) => {
-                    result= (result ? result[value] : epTarget[value])
-                });
-                willPluginInfo = {
-                    value: result,
-                    name: cbParams[idx]
-                }
-                if (plugins && Array.isArray(plugins)) {
-                    plugins.forEach((plugin, index) => {
-                        plugin(willPluginInfo);
-                    })
-                }
+                result = getValuebyKey(singlePath, target, plugins);
                 pResult.push(result);
             }
         })
@@ -194,10 +192,6 @@ const jscalpel = ({ target, keys, prefix, callback, success, deep, plugins, erro
         } else {
             defaultValue = compatCb;
         }
-        // if (typeof defaultValue === 'undefined') {
-        //     return pResult || defaultOpts;
-        // }
-        // return defaultValue;
         return new JscalpelCore({
             target: epTarget,
             keys
