@@ -1,12 +1,4 @@
-const logicMap = {
-    'code': {
-        match: (value) => value === -1,
-        success: (value) => {
-            alert('code');
-        }
-    }
-}
-const jscalpelLogic = ({
+const jscalpelLogic = (logicMap) => ({
     value,
     name
 }) => {
@@ -17,8 +9,10 @@ const jscalpelLogic = ({
             keys: ['match', 'success'],
             callback: (match, success) => {
                 match(value) && success(value);
+                return value;
             }
-        })
+        });
     }
+    return value;
 };
 export default jscalpelLogic;

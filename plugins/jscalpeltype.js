@@ -25,6 +25,7 @@ const jscalpelType = ({
     if (Object.prototype.toString.call(value) === '[object Object]') {
         return {
             value,
+            name,
             type: 'object',
             keys: Object.keys(value),
             values: Object.values(value)

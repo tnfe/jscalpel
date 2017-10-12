@@ -195,23 +195,45 @@
         <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
         <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script>
         <script charset="utf-8">
-           var data = [{
-               status: '0',
-               data: {
-                   response: {
-                       code: -1,
-                       msg: 'jscalpel'
-                   }
-               }
-           }];
+            var logicMap = {
+                'code': {
+                    match: (value, name) => value === -1,
+                    success: (value, name) => {
+                        console.log('logicPlugin', value, name);
+                    }
+                }
+            }
+           var data = {
+               '0': {
+                    status: '0',
+                    data: {
+                        response: {
+                            code: -1,
+                            msg: 'jscalpel'
+                        }
+                    }
+                }
+           };
+           
+           var jscalpelByType = function (info) {
+               console.log('ByType:::', info);
+           }
            jscalpel({
                target: data,
-               keys: ['0.data.response.code', '0.status'],
-               plugins: [jscalpelType, jscalpelLogic],
-               callback: function (code, status) {
-                   console.log('info:::', code, status);
+               keys: function () {
+                   return ['data.response.code', 'status'].map(function(value, index) {
+                       return '0' + '.' + value.toString();
+                   })
+               },
+               plugins: [jscalpelByType, jscalpelLogic(logicMap)],
+               success: function (code, status, target) {
+                   console.log('code:::', code, status);
+               },
+               error: function(target, err) {
+                   console.log(target, err);
                }
-           })
+           }).del(['0.status');
+           console.log('data::::', data);
         </script>
     </body>
 </html>

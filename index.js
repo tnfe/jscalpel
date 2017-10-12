@@ -1,5 +1,89 @@
-const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins}, defaultOpts) => {
+
+class JscalpelCore {
+    constructor({
+        target,
+        keys
+    }) {
+        this._target = target;
+        this._keys = keys;
+    }
+
+    _getValueByKeys (keys) {
+        let result = null;
+        let epTarget = this._target;
+        let pResult = [];
+        if (typeof keys === 'string' && keys.length > 0) {
+            keys.split('.').forEach((value, index) => {
+                result= (result ? result[value] : epTarget[value])
+                console.log('value keys', value, result);
+            });
+            return result;
+        } else if (Object.prototype.toString.call(keys) === '[object Array]') {
+            keys.forEach((singlePath, idx) => {
+                if (typeof singlePath === 'string') {
+                    singlePath.split('.').forEach((value, index) => {
+                        result= (result ? result[value] : epTarget[value])
+                    });
+                    if (typeof result === 'undefined' || result+'' === 'null') {
+                        return;
+                    }
+                    pResult.push(result);
+
+                }
+            })
+            if (pResult.length === 0) {
+                return null;
+            }
+            return pResult;
+        }
+        return null;
+    }
+    get (key) {
+        return this._getValueByKeys(key);
+    }
+    set (keys, value) {
+        let current = {};
+        let keyArr = keys.split('.');
+        let keyLens = keyArr.length;
+        let i = 0;
+        while (i < keyLens-1) {
+            if (keyLens === 1) {
+                this._target[keyArr[i]] = value;
+                break;
+            }
+            this._target[keyArr[i]][keyArr[i+1]] = (i === keyLens-2 ? value : {});
+            i++;
+        }
+    }
+
+    has (key) {
+       let returnedValue = this._getValueByKeys(key);
+       if (!returnedValue) {
+           return false;
+       }
+       return true;
+    }
+
+    del (keys) {
+        let current = {};
+        let keyArr = keys.split('.');
+        let keyLens = keyArr.length;
+        let i = 0;
+        while (i < keyLens-1) {
+            if (keyLens === 1) {
+                this._target[keyArr[i]] = value;
+                break;
+            }
+            this._target[keyArr[i]][keyArr[i+1]] = (i === keyLens-2 ? void 0 : {});
+            i++;
+        }
+    }
+}
+
+
+const jscalpel = ({ target, keys, prefix, callback, success, deep, plugins, error}, defaultOpts) => {
     const nativeToString = Object.prototype.toString;
+    const compatCb = success || callback;
     let enablePrefix = prefix ? true : false;
     const deepCopy = (obj) => {
         const returnObj = {};
@@ -43,12 +127,10 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
     let defaultValue = null;
     let result = null;
     let epTarget = null;
-    const cbParams = callback ? getParameterNames(callback) : [];
-    console.log('cbParams', cbParams);
+    const cbParams = compatCb ? getParameterNames(compatCb) : [];
     let willPluginInfo = {};
-    if (typeof dynamicKeys === 'function') {
-        keys = dynamicKeys(keys) || keys;
-        enablePrefix = false;
+    if (typeof keys === 'function') {
+        keys = keys(prefix);
     }
     try {
         epTarget = typeof target === 'string' ? JSON.parse(target) : target;
@@ -57,15 +139,14 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
         }
 
         if (nativeToString.call(epTarget) !== '[object Object]' && !Array.isArray(epTarget)) {
-            console.error('传入的target不是有效的json或者object');
+            typeof error === 'function' && error(epTarget);
             return;
         }
     } catch (err) {
-        console.error('传入的target不是有效的json或者object');
+        typeof error === 'function' && error(epTarget, err);
         return;
     }
     if (typeof keys === 'string' && keys.length > 0) {
-
         `${autoCompleteKey(keys)}`.split('.').forEach((value, index) => {
             result= (result ? result[value] : epTarget[value])
             willPluginInfo = {
@@ -74,19 +155,19 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
             };
             if (plugins && Array.isArray(plugins)) {
                 plugins.forEach((plugin, index) => {
-                    result = plugin(willPluginInfo);
+                    plugin(willPluginInfo);
                 })
             }
         })
-        if (callback && typeof callback === 'function') {;
-            defaultValue = callback.call(null, result, epTarget, keys, defaultOpts);
+        if (compatCb && typeof compatCb === 'function') {;
+            defaultValue = compatCb.call(null, result, epTarget, keys, defaultOpts);
         } else {
-            defaultValue = callback;
+            defaultValue = compatCb;
         }
-        if (typeof defaultValue === 'undefined') {
-            return result || defaultOpts;
-        }
-        return defaultValue;
+        // if (typeof defaultValue === 'undefined') {
+        //     return result || defaultOpts;
+        // }
+        // return defaultValue;
     } else if (nativeToString.call(keys) === '[object Array]') {
         const pResult = [];
         keys.forEach((singlePath, idx) => {
@@ -101,22 +182,26 @@ const jscalpel = ({ target, keys, prefix, callback, deep, dynamicKeys, plugins},
                 }
                 if (plugins && Array.isArray(plugins)) {
                     plugins.forEach((plugin, index) => {
-                        result = plugin(willPluginInfo);
+                        plugin(willPluginInfo);
                     })
                 }
                 pResult.push(result);
             }
         })
         pResult.push(epTarget,keys, defaultOpts);
-        if (callback && typeof callback === 'function') {
-            defaultValue = callback.apply(null, pResult);
+        if (compatCb && typeof compatCb === 'function') {
+            defaultValue = compatCb.apply(null, pResult);
         } else {
-            defaultValue = callback;
+            defaultValue = compatCb;
         }
-        if (typeof defaultValue === 'undefined') {
-            return pResult || defaultOpts;
-        }
-        return defaultValue;
+        // if (typeof defaultValue === 'undefined') {
+        //     return pResult || defaultOpts;
+        // }
+        // return defaultValue;
+        return new JscalpelCore({
+            target: epTarget,
+            keys
+        })
     }
 }
 
