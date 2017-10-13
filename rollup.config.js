@@ -7,7 +7,7 @@ import { minify } from 'uglify-es';
 export default {
   input: './index.js',
   output: {
-    file: 'dist/jscalpel.min.js',
+    file: 'dist/jscalpel.dev.js',
     format: 'umd',
     exports: 'default',
     name: 'jscalpel',
@@ -18,6 +18,6 @@ export default {
     babel({
       exclude: 'node_modules/**' // only transpile our source code
     }),
-    uglify({}, minify)
+    // uglify({}, minify)
   ]
 };

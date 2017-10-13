@@ -6,9 +6,9 @@ const jscalpelLogic = (logicMap) => ({
         jscalpel({
             target: logicMap,
             prefix: `${name}`,
-            keys: ['match', 'success'],
+            path: ['match', 'success'],
             callback: (match, success) => {
-                match(value) && success(value);
+                match({value, name}) && success({value, name});
                 return value;
             }
         });

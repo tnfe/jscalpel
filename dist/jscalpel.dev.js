@@ -4,6 +4,8 @@
 	(global.jscalpel = factory());
 }(this, (function () { 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12,6 +14,7 @@ var JscalpelCore = function () {
     function JscalpelCore(_ref) {
         var target = _ref.target,
             path = _ref.path,
+            returnedValue = _ref.returnedValue,
             error = _ref.error;
 
         _classCallCheck(this, JscalpelCore);
@@ -19,16 +22,18 @@ var JscalpelCore = function () {
         this._target = target;
         this._path = path;
         this._error = error;
+        this._returnedValue = returnedValue;
     }
 
     _createClass(JscalpelCore, [{
         key: '_getValueByPath',
         value: function _getValueByPath(path) {
-            var result = target;
-            var pathPaths = this._fallbackpath(path).split('.');
-            for (var i = 0, len = pathPaths.length; i < len; i++) {
-                result = result[pathPaths[i]];
-                if (result === undefined) {
+            var result = null;
+            var epTarget = this._target;
+            var keyPaths = this._fallbackpath(path).split('.');
+            for (var i = 0, len = keyPaths.length; i < len; i++) {
+                result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
+                if ((typeof result === 'undefined' ? 'undefined' : _typeof(result)) === undefined) {
                     return result;
                 }
             }
@@ -59,7 +64,7 @@ var JscalpelCore = function () {
     }, {
         key: 'get',
         value: function get(path) {
-            return this._getValueByPath(path);
+            return path ? this._getValueByPath(path) : this._returnedValue;
         }
     }, {
         key: '_fallbackpath',
@@ -193,6 +198,13 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
         return result === null ? [] : result;
     };
 
+    var getReturnedVal = function getReturnedVal(defaultValue, result, pResult) {
+        if (typeof value !== 'undefined') {
+            return value;
+        } else {
+            return result || pResult;
+        }
+    };
     //  try transform anything to object
     var transformAnyToObj = function transformAnyToObj(target) {
         var epTarget = null;
@@ -216,7 +228,7 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
     var defaultValue = null;
     var result = null;
     var epTarget = transformAnyToObj(target);
-    var pResult = [];
+    var pResult = null;
     var cbParams = compatCb ? getParameterNames(compatCb) : [];
     path = typeof path === 'function' ? path(prefix) : path;
 
@@ -230,16 +242,16 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
             defaultValue = compatCb;
         }
     } else if (nativeToString.call(path) === '[object Array]') {
+        pResult = [];
         path.forEach(function (singlePath, idx) {
-            result = null;
             if (typeof singlePath === 'string') {
                 result = getValueByPath({ path: singlePath, target: target });
                 executePlugins({ plugins: plugins, value: result, name: cbParams[idx] });
                 pResult.push(result);
             }
+            result = null;
         });
         pResult.push(epTarget, path, defaultOpts);
-
         if (compatCb && typeof compatCb === 'function') {
             defaultValue = compatCb.apply(null, pResult);
         } else {
@@ -250,6 +262,7 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
     return new JscalpelCore({
         target: epTarget,
         path: path,
+        returnedValue: getReturnedVal(defaultValue, result, pResult.slice(0, -3)),
         error: error
     });
 };
@@ -257,4 +270,4 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
 return jscalpel;
 
 })));
-//# sourceMappingURL=jscalpel.min.js.map
+//# sourceMappingURL=jscalpel.dev.js.map
