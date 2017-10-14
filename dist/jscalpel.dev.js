@@ -10,17 +10,20 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var nativeToString = Object.prototype.toString;
+var isObject = function isObject(path) {
+    return nativeToString.call(path) === '[object Object]';
+};
+
 var JscalpelCore = function () {
     function JscalpelCore(_ref) {
         var target = _ref.target,
-            path = _ref.path,
             returnedValue = _ref.returnedValue,
             error = _ref.error;
 
         _classCallCheck(this, JscalpelCore);
 
         this._target = target;
-        this._path = path;
         this._error = error;
         this._returnedValue = returnedValue;
     }
@@ -47,7 +50,7 @@ var JscalpelCore = function () {
             var self = this;
             if (typeof path === 'string' && path.length > 0) {
                 return this._getValueByPath(path);
-            } else if (Object.prototype.toString.call(path) === '[object Array]') {
+            } else if (nativeToString.call(path) === '[object Array]') {
                 path.forEach(function (singlePath, idx) {
                     if (typeof singlePath === 'string') {
                         result = self._getValueByPath(singlePath);
@@ -75,31 +78,47 @@ var JscalpelCore = function () {
             return path;
         }
     }, {
+        key: '_extend',
+        value: function _extend(ns, ns_string, value) {
+            if (isObject(ns)) {
+                var current = ns;
+                var parts = ns_string.split('.');
+                var pl = parts.length;
+                for (var i = 0; i < pl; i++) {
+                    if (typeof current[parts[i]] === 'undefined') {
+                        current[parts[i]] = {};
+                    }
+                    if (typeof value !== 'undefined' && i === pl - 1) {
+                        current = current[parts[i]] = value;
+                    }
+                    current = current[parts[i]];
+                }
+            }
+        }
+    }, {
         key: '_setOrDel',
         value: function _setOrDel(path, value) {
-            var fallbacPath = this._fallbackpath(path);
-            if (fallbacPath === '') {
+            var fallbackPath = this._fallbackpath(path);
+            if (fallbackPath === '') {
                 if (typeof this._error === 'function') {
                     this._error(this._target, path);
                 }
                 return;
             }
-            var pathArr = fallbacPath.split('.');
-            var pathLens = pathArr.length;
-            var i = 0;
-            if (pathLens === 1) {
-                this._target[pathArr[i]] = value;
-                return;
-            }
-            while (i < pathLens - 1) {
-                this._target[pathArr[i]][pathArr[i + 1]] = i === pathLens - 2 ? value : {};
-                i++;
-            }
+            this._extend(this._target, fallbackPath, value);
         }
     }, {
         key: 'set',
         value: function set(path, value) {
-            this._setOrDel(path, value);
+            var _this = this;
+
+            if (isObject(path)) {
+                Object.keys(path).forEach(function (key, index) {
+                    _this._setOrDel(key, path[key]);
+                });
+            } else {
+                this._setOrDel(path, value);
+            }
         }
     }, {
         key: 'has',
@@ -111,8 +130,8 @@ var JscalpelCore = function () {
             return true;
         }
     }, {
-        key: 'remove',
-        value: function remove(path) {
+        key: 'del',
+        value: function del(path) {
             this._setOrDel(path, void 0);
         }
     }]);
@@ -123,6 +142,7 @@ var JscalpelCore = function () {
 var jscalpel = function jscalpel(_ref2, defaultOpts) {
     var target = _ref2.target,
         path = _ref2.path,
+        keys = _ref2.keys,
         prefix = _ref2.prefix,
         callback = _ref2.callback,
         success = _ref2.success,
@@ -130,14 +150,13 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
         plugins = _ref2.plugins,
         error = _ref2.error;
 
-    var nativeToString = Object.prototype.toString;
     var compatCb = success || callback;
     var enablePrefix = prefix ? true : false;
     var deepCopy = function deepCopy(obj) {
         var returnObj = {};
         var tempArr = [];
         if (nativeToString.call(obj) === '[object Object]') {
-            Object.path(obj).forEach(function (path, index) {
+            Object.keys(obj).forEach(function (path, index) {
                 if (Array.isArray(obj[path])) {
                     obj[path].forEach(function (value, index) {
                         tempArr.push(value);
@@ -153,18 +172,20 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
             return obj;
         }
     };
-    var autoCompletepath = function autoCompletepath(path) {
+
+    var autoCompletePath = function autoCompletePath(path) {
+        // console.log('cccc');
         return '' + (prefix && enablePrefix ? prefix + '.' + path : '' + path);
     };
+
     var getValueByPath = function getValueByPath(_ref3) {
         var path = _ref3.path,
             target = _ref3.target;
 
-        // 优化: 如果检测到undefined直接跳出遍历
         var result = target;
-        var pathPaths = autoCompletepath(path).split('.');
-        for (var i = 0, len = pathPaths.length; i < len; i++) {
-            result = result[pathPaths[i]];
+        var parseingPaths = autoCompletePath(path).split('.');
+        for (var i = 0, len = parseingPaths.length; i < len; i++) {
+            result = result[parseingPaths[i]];
             if (result === undefined) {
                 return result;
             }
@@ -230,7 +251,7 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
     var epTarget = transformAnyToObj(target);
     var pResult = null;
     var cbParams = compatCb ? getParameterNames(compatCb) : [];
-    path = typeof path === 'function' ? path(prefix) : path;
+    path = typeof path === 'function' ? path(prefix) : path || keys;
 
     if (typeof path === 'string' && path.length > 0) {
         result = getValueByPath({ path: path, target: target });
@@ -258,11 +279,11 @@ var jscalpel = function jscalpel(_ref2, defaultOpts) {
             defaultValue = compatCb;
         }
     }
-
+    if (typeof callback === 'function' || typeof success === 'function') {
+        return getReturnedVal(defaultValue, result, pResult.slice(0, -3));
+    }
     return new JscalpelCore({
         target: epTarget,
-        path: path,
-        returnedValue: getReturnedVal(defaultValue, result, pResult.slice(0, -3)),
         error: error
     });
 };

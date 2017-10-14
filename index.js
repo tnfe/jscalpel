@@ -1,13 +1,14 @@
+const nativeToString = Object.prototype.toString;
+const isObject = (path) => nativeToString.call(path) === '[object Object]';
+
 
 class JscalpelCore {
     constructor({
         target,
-        path,
         returnedValue,
         error
     }) {
         this._target = target;
-        this._path = path;
         this._error = error;
         this._returnedValue = returnedValue;
     }
@@ -31,7 +32,7 @@ class JscalpelCore {
         let self = this;
         if (typeof path === 'string' && path.length > 0) {
             return this._getValueByPath(path);
-        } else if (Object.prototype.toString.call(path) === '[object Array]') {
+        } else if (nativeToString.call(path) === '[object Array]') {
             path.forEach((singlePath, idx) => {
                 if (typeof singlePath === 'string') {
                     result = self._getValueByPath(singlePath);
@@ -55,29 +56,44 @@ class JscalpelCore {
         }
         return path;
     }
+
+    // 扩展和设置值
+    _extend (ns, ns_string, ...rest) {
+        if (isObject(ns)) {
+            var current = ns;
+            var parts = ns_string.split('.');
+            var pl = parts.length;
+            for (let i = 0; i<pl; i++) {
+                if (typeof current[parts[i]] === 'undefined') {
+                    current[parts[i]] = {};
+                }
+                if (rest.length>0 && (i === pl-1)) {
+                    current = current[parts[i]] = rest[0];
+                } else {
+                    current = current[parts[i]];
+                }
+
+            } 
+        }
+    }
     _setOrDel (path, value) {
-        let current = {};
-        let fallbacPath = this._fallbackpath(path);
-        if (fallbacPath === '') {
+        let fallbackPath = this._fallbackpath(path);
+        if (fallbackPath === '') {
             if (typeof this._error === 'function') {
                 this._error(this._target, path);
             }
             return;
         }
-        let pathArr = fallbacPath.split('.');
-        let pathLens = pathArr.length;
-        let i = 0;
-        if (pathLens === 1) {
-            this._target[pathArr[i]] = value;
-            return;
-        }
-        while (i < pathLens-1) {
-            this._target[pathArr[i]][pathArr[i+1]] = (i === pathLens-2 ? value : {});
-            i++;
-        }
+        this._extend(this._target, fallbackPath, value);
     }
     set (path, value) {
-        this._setOrDel(path, value);
+        if (isObject(path)) {
+            Object.keys(path).forEach((key, index) => {
+                this._setOrDel(key, path[key]);
+            })
+        } else {
+            this._setOrDel(path, value);
+        }
     }
 
     has (path) {
@@ -88,21 +104,30 @@ class JscalpelCore {
        return true;
     }
 
-    remove(path) {
-        this._setOrDel(path, void 0);
+    del(path) {
+        let self = this;
+        if (!path) {
+            return;
+        }
+        if (Array.isArray(path)) {
+            path.forEach((ph, index) => {
+                self._setOrDel(ph, void 0);
+            })
+        } else {
+            self._setOrDel(ph, void 0);
+        }
     }
 }
 
 
-const jscalpel = ({ target, path, prefix, callback, success, deep, plugins, error}, defaultOpts) => {
-    const nativeToString = Object.prototype.toString;
+const jscalpel = ({ target, path, keys, prefix, callback, success, deep, plugins, error}, defaultOpts) => {
     const compatCb = success || callback;
-    let enablePrefix = prefix ? true : false;
+    const enablePrefix = prefix ? true : false;
     const deepCopy = (obj) => {
         const returnObj = {};
         let tempArr = [];
         if (nativeToString.call(obj) === '[object Object]') {
-            Object.path(obj).forEach((path, index) => {
+            Object.keys(obj).forEach((path, index) => {
                 if (Array.isArray(obj[path])) {
                     obj[path].forEach((value, index) => {
                         tempArr.push(value);
@@ -118,15 +143,16 @@ const jscalpel = ({ target, path, prefix, callback, success, deep, plugins, erro
             return obj;
         }
     }
-    const autoCompletepath = (path) => {
+
+    const autoCompletePath = (path) => {
         return (`${prefix && enablePrefix ? `${prefix}.${path}` : `${path}`}`);
     }
+
     const getValueByPath = function ({path, target, plugins, index}) {
-        // 优化: 如果检测到undefined直接跳出遍历
         let result = target
-        let pathPaths = (autoCompletepath(path)).split('.')
-        for (let i = 0, len = pathPaths.length; i < len; i++) {
-          result = result[pathPaths[i]]
+        let parseingPaths = (autoCompletePath(path)).split('.')
+        for (let i = 0, len = parseingPaths.length; i < len; i++) {
+          result = result[parseingPaths[i]]
           if (result === undefined) {
               return result;
           }
@@ -194,9 +220,9 @@ const jscalpel = ({ target, path, prefix, callback, success, deep, plugins, erro
     let result = null;
     let willPluginInfo = {};
     let epTarget = transformAnyToObj(target);
-    let pResult = null;
+    let pResult = [];
     let cbParams = compatCb ? getParameterNames(compatCb) : [];
-    path = typeof path === 'function' ? path(prefix) : path;
+    path = typeof path === 'function' ? path(prefix) : ( path || keys);
 
 
     if (typeof path === 'string' && path.length > 0) {
@@ -208,7 +234,6 @@ const jscalpel = ({ target, path, prefix, callback, success, deep, plugins, erro
             defaultValue = compatCb;
         }
     } else if (nativeToString.call(path) === '[object Array]') {
-        pResult = [];
         path.forEach((singlePath, idx) => {
             if (typeof singlePath === 'string') {
                 result = getValueByPath({path: singlePath, target});
@@ -224,11 +249,11 @@ const jscalpel = ({ target, path, prefix, callback, success, deep, plugins, erro
             defaultValue = compatCb;
         }
     }
-    
+    if (typeof callback === 'function' || typeof success === 'function') {
+        return getReturnedVal(defaultValue, result, pResult.slice(0,-3));
+    }
     return new JscalpelCore({
         target: epTarget,
-        path,
-        returnedValue: getReturnedVal(defaultValue, result, pResult.slice(0,-3)),
         error
     })
 }

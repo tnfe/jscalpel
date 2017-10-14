@@ -190,7 +190,7 @@
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="../dist/jscalpel.dev.js"></script>
+        <script charset="utf-8" src="../dist/jscalpel.min.js"></script>
         <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
         <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
         <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script>
@@ -219,23 +219,13 @@
                console.log('ByType:::', info);
            }
            var jscalpelInstance = jscalpel({
-               target: data,
-               path: function () {
-                   return ['data.response.code', 'status'].map(function(value, index) {
-                       return '0' + '.' + value.toString();
-                   })
-               },
-               plugins: [jscalpelByType, jscalpelLogic(logicMap)],
-               success: function (code, status, target) {
-                   console.log('code:::', code, status);
-               },
-               error: function(target, err) {
-                   console.log(target, err);
-               }
+               target: data
            });
 
-           console.log(jscalpelInstance.get('0'));
-
+           jscalpelInstance.set({
+               '0.status': 1,
+               '0.data.response.code': 100
+            });
 
            console.log('data::::', data);
         </script>
