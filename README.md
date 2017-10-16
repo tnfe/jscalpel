@@ -34,11 +34,6 @@ yarn add jscalpel --save
 
 ## Changelog
 
-#### 2017.9.11
-
-Disable prefix when using dynamicKeys (dynamic keys)
-
 #### 2017.9.14
 
 Add jscalpelLogic plugin, reduce ifelse, make run logic configurable
-
