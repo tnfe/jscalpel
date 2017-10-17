@@ -211,16 +211,20 @@
            var jscalpelByType = function (info) {
                console.log('ByType:::', info);
            }
-           var jscalpelInstance = jscalpel({
-               target: data
+           
+           jscalpel.default({
+               target: data,
+               path: function () {
+                   return ['0.status', '0.data.response.code'];
+               },
+               plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
+               success: function (status, code, target, keys) {
+                   console.log(status, code, target, keys);
+               },
+               error: function (target, keys) {
+
+               }
            });
-
-           jscalpelInstance.set({
-               '0.status': 1,
-               '0.data.response.code': 100
-            });
-
-           console.log('data::::', data);
         </script>
     </body>
 </html>

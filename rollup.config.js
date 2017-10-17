@@ -9,7 +9,7 @@ export default {
   output: {
     file: 'dist/jscalpel.min.js',
     format: 'umd',
-    exports: 'default',
+    exports: 'named',
     name: 'jscalpel',
     sourceMap: true
   },

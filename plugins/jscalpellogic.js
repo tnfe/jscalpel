@@ -1,3 +1,4 @@
+import jscalpel from '../index';
 const jscalpelLogic = (logicMap) => ({
     value,
     name

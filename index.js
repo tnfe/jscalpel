@@ -1,3 +1,6 @@
+import jscalpelType from './plugins/jscalpeltype';
+import jscalpelLogic from './plugins/jscalpellogic';
+
 const nativeToString = Object.prototype.toString;
 const isObject = (path) => nativeToString.call(path) === '[object Object]';
 
@@ -120,7 +123,7 @@ class JscalpelCore {
 }
 
 
-const jscalpel = ({ target, path, keys, prefix, callback, success, deep, plugins, error}, defaultOpts) => {
+const jscalpel = ({ target, path, keys, dynamicKeys, prefix, callback, success, deep, plugins, error}, defaultOpts) => {
     const compatCb = success || callback;
     const enablePrefix = prefix ? true : false;
     const deepCopy = (obj) => {
@@ -190,8 +193,8 @@ const jscalpel = ({ target, path, keys, prefix, callback, success, deep, plugins
     }
 
     const getReturnedVal = (defaultValue, result, pResult) => {
-        if (typeof value !== 'undefined') {
-            return value;
+        if (typeof defaultValue !== 'undefined') {
+            return defaultValue;
         } else {
             return result || pResult;
         }
@@ -216,15 +219,29 @@ const jscalpel = ({ target, path, keys, prefix, callback, success, deep, plugins
         return epTarget;
     }
 
+    const getPaths = ({
+        path='',
+        keys,
+        dynamicKeys
+    }) => {
+        if (keys || typeof dynamicKeys === 'function') {
+            path = keys || dynamicKeys(prefix);
+        } else if (typeof path === 'function') {
+            path = path(prefix);
+        }
+        return path;
+    }
     let defaultValue = null;
     let result = null;
     let willPluginInfo = {};
     let epTarget = transformAnyToObj(target);
     let pResult = [];
     let cbParams = compatCb ? getParameterNames(compatCb) : [];
-    path = typeof path === 'function' ? path(prefix) : ( path || keys);
-
-
+    path = getPaths({
+        path,
+        keys,
+        dynamicKeys
+    })
     if (typeof path === 'string' && path.length > 0) {
         result = getValueByPath({path, target});
         executePlugins({plugins, name: cbParams[0], value: result});
@@ -259,3 +276,8 @@ const jscalpel = ({ target, path, keys, prefix, callback, success, deep, plugins
 }
 
 export default jscalpel;
+
+export {
+    jscalpelType,
+    jscalpelLogic
+}
