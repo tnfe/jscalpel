@@ -155,9 +155,9 @@
                     </tr>
                     <tr>
                         <td>keys</td>
-                        <td>string/array</td>
+                        <td>string/array/function</td>
                         <td>''</td>
-                        <td>需要访问的一系列路径，可以是单个字符串或者路径数组</td>
+                        <td>需要访问的一系列路径，可以是单个字符串或者路径数组或者是生成这些字符串和数组的函数</td>
                         <td>否</td>
                     </tr>
                     <tr>
@@ -165,13 +165,6 @@
                         <td>string</td>
                         <td>undefined</td>
                         <td>公共前缀，自动为keys加前缀</td>
-                        <td>否</td>
-                    </tr>
-                    <tr>
-                        <td>dynamicKeys</td>
-                        <td>string/object</td>
-                        <td>undefined</td>
-                        <td>常用在react, angular,vue中根据状态的变化生成不同的keys</td>
                         <td>否</td>
                     </tr>
                     <tr>

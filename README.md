@@ -29,16 +29,11 @@ yarn add jscalpel --save
 ```
 #### Include in html
 ```javascript
-  <script charset="utf-8" src="https://unpkg.com/jscalpel@0.5.1/dist/jscalpel.min.js"></script>
+  <script charset="utf-8" src="https://unpkg.com/jscalpel@latest/dist/jscalpel.min.js"></script>
 ```
 
 ## Changelog
 
-#### 2017.9.11
-
-Disable prefix when using dynamicKeys (dynamic keys)
-
 #### 2017.9.14
 
 Add jscalpelLogic plugin, reduce ifelse, make run logic configurable
-
