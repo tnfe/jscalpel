@@ -64,7 +64,7 @@ jscalpelIns.has('data.reponse.code') // returned false;
 
 jscalpel({
   target: data,
-  keys: ['status', 'data.response.code'],
+  path: ['status', 'data.response.code'],
   success: function (status, code, target, keys) {
 
   },
@@ -78,7 +78,7 @@ import { jscalpelType, jscalpelLogic } from 'jscalpel';
 
 jscalpel({
   target: data,
-  keys: ['status', 'data.response.code'],
+  path: ['status', 'data.response.code'],
   plugins: [jscalpelType, jscalpelLogic],
   success: function (status, code, target, keys) {
 
