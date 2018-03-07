@@ -183,19 +183,19 @@
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="../dist/jscalpel.min.js"></script>
+        <script charset="utf-8" src="../build/jscalpel.js"></script>
         <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
-        <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
-        <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script>
+        <!-- <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
+        <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script> -->
         <script charset="utf-8">
-            var logicMap = {
-                'code': {
-                    match: ({value, name}) => value === -1,
-                    success: ({value, name}) => {
-                        console.log('logicPlugin', value, name);
-                    }
-                }
-            }
+            // var logicMap = {
+            //     'code': {
+            //         match: ({value, name}) => value === -1,
+            //         success: ({value, name}) => {
+            //             console.log('logicPlugin', value, name);
+            //         }
+            //     }
+            // }
            var data = {
                '0': {
                     status: '0',
@@ -208,23 +208,24 @@
                 }
            };
            
-           var jscalpelByType = function (info) {
-               console.log('ByType:::', info);
-           }
+        //    var jscalpelByType = function (info) {
+        //        console.log('ByType:::', info);
+        //    }
            
-           jscalpel.default({
+           var returnVal = jscalpel.default({
                target: data,
-               path: function () {
-                   return ['0.status', '0.data.response.code'];
-               },
-               plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
-               success: function (status, code, target, keys) {
+               prefix: '0',
+               path: ['status','data.response.code', 'x.y' ],
+            //    plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
+               success: function (status, code, unkown, target, keys) {
                    console.log(status, code, target, keys);
+                   return unkown;
                },
                error: function (target, keys) {
-
+                   console.warn('target:::', target, keys);
                }
            });
+           console.warn('returnVal::::', returnVal);
         </script>
     </body>
 </html>
