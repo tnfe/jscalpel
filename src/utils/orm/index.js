@@ -1,7 +1,5 @@
 import jscalpel from '../../index';
-
-export const isObject = obj => (Object.prototype.toString.call(obj) === '[object Object]');
-
+import { isObject } from '../index';
 const jscalpelORM = (source = {}, rules, defaultValue) => {
   if (!isObject(source)) {
     console.error(`source为${source},不是对象`);

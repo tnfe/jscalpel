@@ -183,7 +183,7 @@
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="../build/jscalpel.js"></script>
+        <script charset="utf-8" src="../index.js"></script>
         <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
         <!-- <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
         <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script> -->
@@ -225,7 +225,10 @@
                    console.warn('target:::', target, keys);
                }
            });
-           console.warn('returnVal::::', returnVal);
+           console.warn('returnVal::::', returnVal,window);
+           jscalpel.jscalpelORM(data, {
+               '0': '11',
+           });
         </script>
     </body>
 </html>
