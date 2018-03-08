@@ -22,7 +22,7 @@ const jscalpelORM = (source = {}, rules, defaultValue) => {
     targetPath.forEach((path, index) => {
       jscalpelIns.set(path, typeof jscalpelSourceIns.get(path) === 'undefined' ? jscalpelSourceIns.get(rules[path]) : jscalpelSourceIns.get(path));
     });
-    return Object.assign(source, target, _extraInfo);
+    return Object.assign(target, _extraInfo);
   } catch (e) {
     console.error('请检查source和rules配置，两者都必须为对象!');
     return defaultValue;
