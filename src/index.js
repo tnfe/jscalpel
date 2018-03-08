@@ -1,6 +1,6 @@
 import jscalpelType from './plugins/jscalpeltype';
 import jscalpelLogic from './plugins/jscalpellogic';
-
+import { jscalpelORM } from './utils';
 const nativeToString = Object.prototype.toString;
 const isObject = (path) => nativeToString.call(path) === '[object Object]';
 
@@ -279,5 +279,6 @@ export default jscalpel;
 
 export {
     jscalpelType,
-    jscalpelLogic
+    jscalpelLogic,
+    jscalpelORM,
 }

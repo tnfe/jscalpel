@@ -1,6 +1,6 @@
 import jscalpel from '../../index';
 
-export const isObject = obj => Object.prototype.toString.call(obj) === '[Object object]';
+export const isObject = obj => (Object.prototype.toString.call(obj) === '[object Object]');
 
 const jscalpelORM = (source = {}, rules, defaultValue) => {
   if (!isObject(source)) {
