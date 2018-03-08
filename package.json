@@ -1,8 +1,8 @@
 {
   "name": "jscalpel",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "description": "A small feature library that makes it easier to manipulate objects",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "watch": "browser-sync start --proxy='localhost:8080' --files='*.html, dist/*.js'",
     "build": "rollup -c --watch && http-server",

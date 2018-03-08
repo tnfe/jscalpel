@@ -7,7 +7,7 @@ import { minify } from 'uglify-es';
 export default {
   input: './src/index.js',
   output: {
-    file: 'index.js',
+    file: './dist/index.js',
     format: 'umd',
     exports: 'named',
     name: 'jscalpel',
