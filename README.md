@@ -73,21 +73,6 @@ jscalpel({
   }
 })
 
-// use plugin
-import { jscalpelType, jscalpelLogic } from 'jscalpel';
-
-jscalpel({
-  target: data,
-  path: ['status', 'data.response.code'],
-  plugins: [jscalpelType, jscalpelLogic],
-  success: function (status, code, target, keys) {
-
-  },
-  error: function (target, keys) {
-
-  }
-})
-
 ```
 ## Changelog
 
