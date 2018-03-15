@@ -123,7 +123,7 @@
                 <p>npm i jscalpel --save</p>
                 <p>import jscalpel from 'jscalpel'</p>
                 <h5>Es5</h5>
-                <p> 1.download <a href="https://unpkg.com/jscalpel@latest/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
+                <p> 1.download <a href="https://unpkg.com/jscalpel@latest/dist" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
                 <p> 2. directly in the srcipt tag</p>
             </div>
             <h3>Usage</h3>
@@ -136,6 +136,7 @@
                         <th>default value</th>
                         <th>use</th>
                         <th>isRequired</th>
+                        <th>required version</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -145,6 +146,7 @@
                         <td>{}</td>
                         <td>target</td>
                         <td>true</td>
+                        <td>all</td>
                     </tr>
                     <tr>
                         <td>deep</td>
@@ -152,13 +154,7 @@
                         <td>false</td>
                         <td>whether or not to copy the target object in depth</td>
                         <td>false</td>
-                    </tr>
-                    <tr>
-                        <td>keys</td>
-                        <td>string/array/function</td>
-                        <td>''</td>
-                        <td>need to access a series of paths, can be a single string or path array or gen string/array by function</td>
-                        <td>false</td>
+                        <td>all</td>
                     </tr>
                     <tr>
                         <td>prefix</td>
@@ -166,36 +162,59 @@
                         <td>undefined</td>
                         <td>public prefix, automatically added for the keys</td>
                         <td>false</td>
+                        <td>all</td>
                     </tr>
                     <tr>
-                        <td>callback</td>
+                        <td>success</td>
                         <td>function</td>
                         <td>function () {}</td>
                         <td>The function that was called when the analysis was successful</td>
                         <td>true</td>
+                        <td>^0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>error</td>
+                        <td>function</td>
+                        <td>function () {}</td>
+                        <td>The function that is called when the analysis fails.</td>
+                        <td>false</td>
+                        <td>^0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>path</td>
+                        <td>string/array/function</td>
+                        <td>[]</td>
+                        <td>path</td>
+                        <td>false</td>
+                        <td>^0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>plugins</td>
+                        <td>array</td>
+                        <td>[]</td>
+                        <td>A plug-in set, similar to the webpack plugins.</td>
+                        <td>false</td>
+                        <td>^0.6.2</td>
                     </tr>
                 </tbody>
             </table>
             <div class="scalpel-section">
                 <h3>Demos</h3>
                 <div class="scalpel-jsbin">
-                  <script async src="//jsfiddle.net/sheldoncui/sqp6q88d/5/embed/"></script>
+                    <script async src="//jsfiddle.net/as3tLkdy/24/embed/"></script>
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="../index.js"></script>
-        <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
-        <!-- <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
-        <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script> -->
+        <script charset="utf-8" src="//unpkg.com/jscalpel@1.2.0/dist"></script>
         <script charset="utf-8">
-            // var logicMap = {
-            //     'code': {
-            //         match: ({value, name}) => value === -1,
-            //         success: ({value, name}) => {
-            //             console.log('logicPlugin', value, name);
-            //         }
-            //     }
-            // }
+            var logicMap = {
+                'code': {
+                    match: ({value, name}) => value === -1,
+                    success: ({value, name}) => {
+                        console.log('logicPlugin', value, name);
+                    }
+                }
+            }
            var data = {
                '0': {
                     status: '0',
@@ -208,15 +227,15 @@
                 }
            };
            
-        //    var jscalpelByType = function (info) {
-        //        console.log('ByType:::', info);
-        //    }
+           var jscalpelByType = function (info) {
+               console.log('ByType:::', info);
+           }
            
            var returnVal = jscalpel.default({
                target: data,
                prefix: '0',
                path: ['status','data.response.code', 'x.y' ],
-            //    plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
+               plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
                success: function (status, code, unkown, target, keys) {
                    console.log(status, code, target, keys);
                    return unkown;

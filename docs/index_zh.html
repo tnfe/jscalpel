@@ -123,7 +123,7 @@
                 <p>npm i jscalpel --save</p>
                 <p>import jscalpel from 'jscalpel'</p>
                 <h5>Es5</h5>
-                <p> 1.下载<a href="https://unpkg.com/jscalpel@latest/dist/jscalpel.min.js" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
+                <p> 1.下载<a href="https://unpkg.com/jscalpel@latest/dist" alt="jscalpel" title="jscalpel" target="_blank">jscalpel.min.js</a></p>
                 <p> 2. 在srcipt标签中直接引入</p>
             </div>
             <h3>使用</h3>
@@ -136,6 +136,7 @@
                         <th>默认值</th>
                         <th>用途</th>
                         <th>是否必须</th>
+                        <th>适配版本号</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -145,6 +146,7 @@
                         <td>{}</td>
                         <td>目标对象</td>
                         <td>是</td>
+                        <td>所有</td>
                     </tr>
                     <tr>
                         <td>deep</td>
@@ -152,13 +154,7 @@
                         <td>false</td>
                         <td>是否深度拷贝目标对象</td>
                         <td>否</td>
-                    </tr>
-                    <tr>
-                        <td>keys</td>
-                        <td>string/array/function</td>
-                        <td>''</td>
-                        <td>需要访问的一系列路径，可以是单个字符串或者路径数组或者是生成这些字符串和数组的函数</td>
-                        <td>否</td>
+                        <td>所有</td>
                     </tr>
                     <tr>
                         <td>prefix</td>
@@ -166,45 +162,92 @@
                         <td>undefined</td>
                         <td>公共前缀，自动为keys加前缀</td>
                         <td>否</td>
+                        <td>所有</td>
                     </tr>
                     <tr>
-                        <td>callback</td>
+                        <td>success</td>
                         <td>function</td>
                         <td>function () {}</td>
                         <td>分析成功时调用的函数</td>
                         <td>是</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>error</td>
+                        <td>function</td>
+                        <td>function () {}</td>
+                        <td>分析失败时调用的函数</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>path</td>
+                        <td>string/array/function</td>
+                        <td>[]</td>
+                        <td>和keys作用等同</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>plugins</td>
+                        <td>array</td>
+                        <td>[]</td>
+                        <td>插件集，类似于webpack的 plugins</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
                     </tr>
                 </tbody>
             </table>
             <div class="scalpel-section">
                 <h3>Demos</h3>
                 <div class="scalpel-jsbin">
-                   <script async src="//jsfiddle.net/ihtml5/as3tLkdy/11/embed/"></script>
+                    <script async src="//jsfiddle.net/as3tLkdy/24/embed/"></script>
                 </div>
             </div>
         </div>
-        <script charset="utf-8" src="../dist/jscalpel.min.js"></script>
-        <!-- <script charset="utf-8" src="../dist/plugins/jscalpeltype.min.js"></script> -->
-        <script charset="utf-8" src="../dist/plugins/jscalpelType.min.js"></script>
-        <script charset="utf-8" src="../dist/plugins/jscalpelLogic.min.js"></script>
+        <script charset="utf-8" src="//unpkg.com/jscalpel@1.2.0/dist/index.js"></script>
         <script charset="utf-8">
-           var data = [{
-               status: '0',
-               data: {
-                   response: {
-                       code: -1,
-                       msg: 'jscalpel'
-                   }
-               }
-           }];
-           jscalpel({
+            var logicMap = {
+                'code': {
+                    match: ({value, name}) => value === -1,
+                    success: ({value, name}) => {
+                        console.log('logicPlugin', value, name);
+                    }
+                }
+            }
+           var data = {
+               '0': {
+                    status: '0',
+                    data: {
+                        response: {
+                            code: -1,
+                            msg: 'jscalpel'
+                        }
+                    }
+                }
+           };
+           
+           var jscalpelByType = function (info) {
+               console.log('ByType:::', info);
+           }
+           
+           var returnVal = jscalpel.default({
                target: data,
-               keys: ['0.data.response.code', '0.status'],
-               plugins: [jscalpelType, jscalpelLogic],
-               callback: function (code, status) {
-                   console.log('info:::', code, status);
+               prefix: '0',
+               path: ['status','data.response.code', 'x.y' ],
+               plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
+               success: function (status, code, unkown, target, keys) {
+                   console.log(status, code, target, keys);
+                   return unkown;
+               },
+               error: function (target, keys) {
+                   console.warn('target:::', target, keys);
                }
-           })
+           });
+           console.warn('returnVal::::', returnVal,window);
+           jscalpel.jscalpelORM(data, {
+               '0': '11',
+           });
         </script>
     </body>
 </html>
