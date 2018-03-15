@@ -142,10 +142,10 @@ jscalpel.default({
   prefix: 'response',
   path: ['code', 'msg'],
   success:  (code, msg, finalRes, keys) => {
-    /*
-    	finalRes 指的是目标对象或者是目标对象的深度拷贝版
-      keys指的是最终生成的访问路径
-    */
+  /*
+    finalRes 指的是目标对象或者是目标对象的深度拷贝版
+    keys指的是最终生成的访问路径
+  */
     console.log( finalRes === res);
   	console.log('deep into callback:', code, msg, finalRes, keys);
   }
