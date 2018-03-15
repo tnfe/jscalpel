@@ -62,16 +62,115 @@ jscalpelIns.has('data.reponse.code') // returned false;
 
 // advanced
 
-jscalpel({
-  target: data,
-  path: ['status', 'data.response.code'],
-  success: function (status, code, target, keys) {
-
+const res = {
+  data: {
+    article: [{
+      articleId: 0,
+        title: 'jscalpel'
+    }]
   },
-  error: function (target, keys) {
+  response: {
+    code: '0',
+    msg: 'success'
+  }
+}
+const logicMap = {
+  'code': {
+    match: ({value, name}) => value === '0',
+    success: ({value, name}) => {
+      console.log('logicPlugin', value, name);
+    }
+  }
+}
 
+/*
+	path为数组时
+  output: {articleId: 0, title: "jscalpel"} success
+*/
+jscalpel.default({
+	target: res,
+  path: ['data.article.0', 'response.msg'],
+  success:  (article, msg) => {
+  	console.log('keys=>array=>output:', article, msg);
   }
 })
+/*
+	path为字符串时
+  output: 'keys=>string=>output:' success
+*/
+jscalpel.default({
+	target: res,
+  path: 'response.msg',
+  success:  (msg) => {
+  	console.log('keys=>string=>output:',msg);
+  }
+})
+/*
+	prefix
+  output: 'prefix=>output:' '0' 'success'
+*/
+
+jscalpel.default({
+	target: res,
+  prefix: 'response',
+  path: ['code', 'msg'],
+  success:  (code, msg) => {
+  	console.log('prefix=>output:', code, msg);
+  }
+})
+//
+
+/*
+	path为函数时
+  output: dynamic=>output: '0' 'success'
+*/
+
+jscalpel.default({
+	target: res,
+  path: () => ['code', 'msg'].map((key) => `response.${key}`),
+  success:  (code, msg) => {
+  	console.log('dynamic=>output:', code, msg);
+  }
+})
+/*
+  deep 是否深度拷贝目标对象
+*/
+
+jscalpel.default({
+	target: res,
+  deep: true,
+  prefix: 'response',
+  path: ['code', 'msg'],
+  success:  (code, msg, finalRes, keys) => {
+    /*
+    	finalRes 指的是目标对象或者是目标对象的深度拷贝版
+      keys指的是最终生成的访问路径
+    */
+    console.log( finalRes === res);
+  	console.log('deep into callback:', code, msg, finalRes, keys);
+  }
+})
+
+/*
+ 内置类型检测插件和逻辑分流插件
+*/
+
+jscalpel.default({
+	target: res,
+  deep: true,
+  prefix: 'response',
+  path: ['code', 'msg'],
+  plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
+  success: (code, msg, finalRes, keys) => {
+    /*
+    	finalRes 指的是目标对象或者是目标对象的深度拷贝版
+      keys指的是最终生成的访问路径
+    */
+    console.log( finalRes === res);
+  	console.log('deep into callback:', code, msg, finalRes, keys);
+  }
+})
+
 
 ```
 ## Changelog
