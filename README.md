@@ -31,6 +31,8 @@ yarn add jscalpel --save
 ```javascript
   <script charset="utf-8" src="https://unpkg.com/jscalpel@1.2.0/dist/index.js"></script>
 ```
+#### [Demos](https://jsfiddle.net/as3tLkdy/27/?utm_source=website&utm_medium=embed&utm_campaign=as3tLkdy)
+
 ```javascript
 var data = {
   status: '0',
@@ -82,11 +84,6 @@ const logicMap = {
     }
   }
 }
-
-/*
-	path为数组时
-  output: {articleId: 0, title: "jscalpel"} success
-*/
 jscalpel.default({
 	target: res,
   path: ['data.article.0', 'response.msg'],
@@ -94,10 +91,7 @@ jscalpel.default({
   	console.log('keys=>array=>output:', article, msg);
   }
 })
-/*
-	path为字符串时
-  output: 'keys=>string=>output:' success
-*/
+
 jscalpel.default({
 	target: res,
   path: 'response.msg',
@@ -105,10 +99,6 @@ jscalpel.default({
   	console.log('keys=>string=>output:',msg);
   }
 })
-/*
-	prefix
-  output: 'prefix=>output:' '0' 'success'
-*/
 
 jscalpel.default({
 	target: res,
@@ -120,11 +110,6 @@ jscalpel.default({
 })
 //
 
-/*
-	path为函数时
-  output: dynamic=>output: '0' 'success'
-*/
-
 jscalpel.default({
 	target: res,
   path: () => ['code', 'msg'].map((key) => `response.${key}`),
@@ -132,9 +117,6 @@ jscalpel.default({
   	console.log('dynamic=>output:', code, msg);
   }
 })
-/*
-  deep 是否深度拷贝目标对象
-*/
 
 jscalpel.default({
 	target: res,
@@ -142,18 +124,10 @@ jscalpel.default({
   prefix: 'response',
   path: ['code', 'msg'],
   success:  (code, msg, finalRes, keys) => {
-  /*
-    finalRes 指的是目标对象或者是目标对象的深度拷贝版
-    keys指的是最终生成的访问路径
-  */
     console.log( finalRes === res);
   	console.log('deep into callback:', code, msg, finalRes, keys);
   }
-})
-
-/*
- 内置类型检测插件和逻辑分流插件
-*/
+});
 
 jscalpel.default({
 	target: res,
@@ -162,10 +136,6 @@ jscalpel.default({
   path: ['code', 'msg'],
   plugins: [jscalpel.jscalpelType, jscalpel.jscalpelLogic(logicMap)],
   success: (code, msg, finalRes, keys) => {
-    /*
-    	finalRes 指的是目标对象或者是目标对象的深度拷贝版
-      keys指的是最终生成的访问路径
-    */
     console.log( finalRes === res);
   	console.log('deep into callback:', code, msg, finalRes, keys);
   }
