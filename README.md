@@ -143,6 +143,9 @@ jscalpel.default({
 
 
 ```
+## Related projects
+[jscalpel-orm](https://github.com/ihtml5/jscalpel-orm)
+> It is convenient for you to extract the required fields from one object to generate another object.
 ## Changelog
 
 #### 2017.9.14
