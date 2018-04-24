@@ -14,7 +14,7 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
 ## Document
 
 #### View the document please visit [https://ihtml5.github.io/jscalpel/](https://ihtml5.github.io/jscalpel/)
-[中文](https://ihtml5.github.io/jscalpel/index-zh.html)
+[中文文档](https://ihtml5.github.io/jscalpel/index-zh.html)
 
 ## Installation
 
