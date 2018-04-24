@@ -13,7 +13,8 @@ jscalpel is little poor, gzip less than **3k**, so a library you can use it anyt
 | `jscalpel` | [![npm (scoped)](https://img.shields.io/npm/v/jscalpel.svg?maxAge=86400)](https://www.npmjs.com/package/jscalpel) | [![Dependency Status](https://david-dm.org/ihtml5/jscalpel.svg)](https://david-dm.org/ihtml5/jscalpel) | [![devDependency Status](https://david-dm.org/ihtml5/jscalpel/dev-status.svg)](https://david-dm.org/ihtml5/jscalpel?type=master) | [![Build Status](https://travis-ci.org/malash/jscalpel.svg?branch=master)](https://travis-ci.org/ihtml5/jscalpel) |
 ## Document
 
-#### View the document please visit [https://ihtml5.github.io/jscalpel/](https://ihtml5.github.io/jscalpel/)[中文]（https://ihtml5.github.io/jscalpel/index-zh.html）
+#### View the document please visit [https://ihtml5.github.io/jscalpel/](https://ihtml5.github.io/jscalpel/)
+[中文](https://ihtml5.github.io/jscalpel/index-zh.html)
 
 ## Installation
 
