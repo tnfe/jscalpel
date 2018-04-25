@@ -89,7 +89,7 @@ yarn add jscalpel --save
                         <td>path</td>
                         <td>string/array/function</td>
                         <td>[]</td>
-                        <td>和keys作用等同</td>
+                        <td>路径</td>
                         <td>否</td>
                         <td>大于0.6.2</td>
                     </tr>
