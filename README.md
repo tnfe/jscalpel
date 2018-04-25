@@ -33,7 +33,7 @@ yarn add jscalpel --save
   <script charset="utf-8" src="https://unpkg.com/jscalpel@latest/dist/index.js"></script>
 ```
 #### APIS
-            <table class="scalpel-table">
+   <table class="scalpel-table">
                 <thead>
                     <tr>
                         <th>参数</th>
