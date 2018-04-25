@@ -157,7 +157,7 @@ const logicMap = {
     }
   }
 }
-jscalpel.default({
+jscalpel({
 	target: res,
   path: ['data.article.0', 'response.msg'],
   success:  (article, msg) => {
@@ -165,7 +165,7 @@ jscalpel.default({
   }
 })
 
-jscalpel.default({
+jscalpel({
 	target: res,
   path: 'response.msg',
   success:  (msg) => {
@@ -173,7 +173,7 @@ jscalpel.default({
   }
 })
 
-jscalpel.default({
+jscalpel({
 	target: res,
   prefix: 'response',
   path: ['code', 'msg'],
@@ -191,7 +191,7 @@ jscalpel.default({
   }
 })
 
-jscalpel.default({
+jscalpel({
 	target: res,
   deep: true,
   prefix: 'response',
@@ -202,7 +202,7 @@ jscalpel.default({
   }
 });
 
-jscalpel.default({
+jscalpel({
 	target: res,
   deep: true,
   prefix: 'response',
