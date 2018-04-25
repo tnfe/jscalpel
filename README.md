@@ -32,6 +32,79 @@ yarn add jscalpel --save
 ```javascript
   <script charset="utf-8" src="https://unpkg.com/jscalpel@latest/dist/index.js"></script>
 ```
+#### APIS
+<h3>使用</h3>
+            <h5>参数说明</h5>
+            <table class="scalpel-table">
+                <thead>
+                    <tr>
+                        <th>参数</th>
+                        <th>类型</th>
+                        <th>默认值</th>
+                        <th>用途</th>
+                        <th>是否必须</th>
+                        <th>适配版本号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>target</td>
+                        <td>string/object</td>
+                        <td>{}</td>
+                        <td>目标对象</td>
+                        <td>是</td>
+                        <td>所有</td>
+                    </tr>
+                    <tr>
+                        <td>deep</td>
+                        <td>boolean</td>
+                        <td>false</td>
+                        <td>是否深度拷贝目标对象</td>
+                        <td>否</td>
+                        <td>所有</td>
+                    </tr>
+                    <tr>
+                        <td>prefix</td>
+                        <td>string</td>
+                        <td>undefined</td>
+                        <td>公共前缀，自动为keys加前缀</td>
+                        <td>否</td>
+                        <td>所有</td>
+                    </tr>
+                    <tr>
+                        <td>success</td>
+                        <td>function</td>
+                        <td>function () {}</td>
+                        <td>分析成功时调用的函数</td>
+                        <td>是</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>error</td>
+                        <td>function</td>
+                        <td>function () {}</td>
+                        <td>分析失败时调用的函数</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>path</td>
+                        <td>string/array/function</td>
+                        <td>[]</td>
+                        <td>和keys作用等同</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                    <tr>
+                        <td>plugins</td>
+                        <td>array</td>
+                        <td>[]</td>
+                        <td>插件集，类似于webpack的 plugins</td>
+                        <td>否</td>
+                        <td>大于0.6.2</td>
+                    </tr>
+                </tbody>
+            </table>
 #### [Demos](https://jsfiddle.net/as3tLkdy/27/?utm_source=website&utm_medium=embed&utm_campaign=as3tLkdy)
 
 ```javascript
