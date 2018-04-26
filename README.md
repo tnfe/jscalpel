@@ -158,7 +158,7 @@ jscalpel({
 })
 
 jscalpel({
-	    target: res,
+	target: res,
   path: 'response.msg',
   success:  (msg) => {
   	console.log('keys=>string=>output:',msg);
@@ -168,7 +168,7 @@ jscalpel({
 #### use prefix
 ```
 jscalpel({
-	    target: res,
+	target: res,
   prefix: 'response',
   path: ['code', 'msg'],
   success:  (code, msg) => {
@@ -179,7 +179,7 @@ jscalpel({
 #### dynamic path
 ```
 jscalpel({
-    target: res,
+  target: res,
   path: () => ['code', 'msg'].map((key) => `response.${key}`),
   success:  (code, msg) => {
   	console.log('dynamic=>output:', code, msg);
@@ -187,7 +187,7 @@ jscalpel({
 })
 
 jscalpel({
-	    target: res,
+	target: res,
   deep: true,
   prefix: 'response',
   path: ['code', 'msg'],
@@ -208,7 +208,7 @@ const logicMap = {
   }
 }
 jscalpel({
-      target: res,
+  target: res,
   deep: true,
   prefix: 'response',
   path: ['code', 'msg'],
