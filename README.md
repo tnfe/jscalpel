@@ -230,3 +230,7 @@ Add jscalpelLogic plugin, reduce ifelse, make run logic configurable
 #### 2018.3.08
 
 add orm 
+
+## License
+
+[The MIT License](https://opensource.org/licenses/MIT).
