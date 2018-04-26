@@ -174,10 +174,10 @@ jscalpel({
   }
 })
 ```
-##### dynamic path
+#### dynamic path
 ```
 jscalpel({
-	target: res,
+target: res,
   path: () => ['code', 'msg'].map((key) => `response.${key}`),
   success:  (code, msg) => {
   	console.log('dynamic=>output:', code, msg);
@@ -195,7 +195,7 @@ jscalpel({
   }
 });
 ```
-##### use plugins
+#### use plugins
 ```
 const logicMap = {
   'code': {
@@ -206,7 +206,7 @@ const logicMap = {
   }
 }
 jscalpel({
-	target: res,
+    target: res,
   deep: true,
   prefix: 'response',
   path: ['code', 'msg'],
