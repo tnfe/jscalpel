@@ -149,14 +149,6 @@ const res = {
     msg: 'success'
   }
 }
-const logicMap = {
-  'code': {
-    match: ({value, name}) => value === '0',
-    success: ({value, name}) => {
-      console.log('logicPlugin', value, name);
-    }
-  }
-}
 jscalpel({
 	target: res,
   path: ['data.article.0', 'response.msg'],
@@ -181,9 +173,10 @@ jscalpel({
   	console.log('prefix=>output:', code, msg);
   }
 })
-//
-
-jscalpel.default({
+```
+##### dynamic path
+```
+jscalpel({
 	target: res,
   path: () => ['code', 'msg'].map((key) => `response.${key}`),
   success:  (code, msg) => {
@@ -201,7 +194,17 @@ jscalpel({
   	console.log('deep into callback:', code, msg, finalRes, keys);
   }
 });
-
+```
+##### use plugins
+```
+const logicMap = {
+  'code': {
+    match: ({value, name}) => value === '0',
+    success: ({value, name}) => {
+      console.log('logicPlugin', value, name);
+    }
+  }
+}
 jscalpel({
 	target: res,
   deep: true,
@@ -213,8 +216,6 @@ jscalpel({
   	console.log('deep into callback:', code, msg, finalRes, keys);
   }
 })
-
-
 ```
 ## Related projects
 [jscalpel-orm](https://github.com/ihtml5/jscalpel-orm)
