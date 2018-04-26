@@ -107,6 +107,7 @@ yarn add jscalpel --save
 ## [Online Demos](https://jsfiddle.net/as3tLkdy/27/?utm_source=website&utm_medium=embed&utm_campaign=as3tLkdy)
 
 ## Code
+#### 1. simple pattern
 ```javascript
 // mock data
 var data = {
@@ -137,7 +138,7 @@ jscalpelIns.del('data.reponse.code')
 jscalpelIns.get('data.reponse.code') // returned undefined;
 jscalpelIns.has('data.reponse.code') // returned false;
 ```
-#### advanced patterns
+#### 2.advanced patterns
 ```
 const res = {
   data: {
@@ -167,7 +168,7 @@ jscalpel({
   }
 });
 ```
-#### use prefix
+#### 3.use prefix
 ```
 jscalpel({
 	target: res,
@@ -178,7 +179,7 @@ jscalpel({
   }
 })
 ```
-#### dynamic path
+#### 4.dynamic path
 ```
 jscalpel({
   target: res,
@@ -199,7 +200,7 @@ jscalpel({
   }
 });
 ```
-#### use plugins
+#### 5.use plugins
 ```
 const logicMap = {
   'code': {
