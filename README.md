@@ -134,9 +134,9 @@ jscalpelIns.del('data.reponse.code')
 
 jscalpelIns.get('data.reponse.code') // returned undefined;
 jscalpelIns.has('data.reponse.code') // returned false;
-
-// advanced
-
+```
+#### advanced patterns
+```
 const res = {
   data: {
     article: [{
@@ -150,7 +150,7 @@ const res = {
   }
 }
 jscalpel({
-	target: res,
+	   target: res,
   path: ['data.article.0', 'response.msg'],
   success:  (article, msg) => {
   	console.log('keys=>array=>output:', article, msg);
@@ -158,15 +158,17 @@ jscalpel({
 })
 
 jscalpel({
-	target: res,
+	    target: res,
   path: 'response.msg',
   success:  (msg) => {
   	console.log('keys=>string=>output:',msg);
   }
-})
-
+});
+```
+#### use prefix
+```
 jscalpel({
-	target: res,
+	    target: res,
   prefix: 'response',
   path: ['code', 'msg'],
   success:  (code, msg) => {
@@ -177,7 +179,7 @@ jscalpel({
 #### dynamic path
 ```
 jscalpel({
-target: res,
+    target: res,
   path: () => ['code', 'msg'].map((key) => `response.${key}`),
   success:  (code, msg) => {
   	console.log('dynamic=>output:', code, msg);
@@ -185,7 +187,7 @@ target: res,
 })
 
 jscalpel({
-	target: res,
+	    target: res,
   deep: true,
   prefix: 'response',
   path: ['code', 'msg'],
@@ -206,7 +208,7 @@ const logicMap = {
   }
 }
 jscalpel({
-    target: res,
+      target: res,
   deep: true,
   prefix: 'response',
   path: ['code', 'msg'],
