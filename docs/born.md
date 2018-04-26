@@ -57,4 +57,4 @@ jscalpel取名为js手术刀。 基于笔者开发[norton-miniui](http://github.
         }
     }
 ```
-从上面的方法，我们可以看出最早的jscalpel需要通过传递options来返回一个闭包来实现对传入的对象的遍历。
+从上面的方法，我们可以看出最早的jscalpel需要通过传递options返回一个闭包,来实现对传入的对象的遍历。
