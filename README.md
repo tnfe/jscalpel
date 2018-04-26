@@ -32,7 +32,7 @@ yarn add jscalpel --save
 ```javascript
   <script charset="utf-8" src="https://unpkg.com/jscalpel@latest/dist/index.js"></script>
 ```
-#### APIS
+## APIS
 <table class="scalpel-table">
                 <thead>
                     <tr>
@@ -104,9 +104,11 @@ yarn add jscalpel --save
                 </tbody>
             </table>
             
-#### [Demos](https://jsfiddle.net/as3tLkdy/27/?utm_source=website&utm_medium=embed&utm_campaign=as3tLkdy)
+## [Online Demos](https://jsfiddle.net/as3tLkdy/27/?utm_source=website&utm_medium=embed&utm_campaign=as3tLkdy)
 
+## Code
 ```javascript
+// mock data
 var data = {
   status: '0',
   data: {
