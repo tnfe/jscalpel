@@ -132,9 +132,7 @@ jscalpelIns.set({
 jscalpelIns.get('data.response.code') // returned 12
 jscalpelIns.get('status') // returned 1
 jscalpelIns.has('data.response.code') // returned true
-
 jscalpelIns.del('data.reponse.code') 
-
 jscalpelIns.get('data.reponse.code') // returned undefined;
 jscalpelIns.has('data.reponse.code') // returned false;
 ```
@@ -153,7 +151,7 @@ const res = {
   }
 }
 jscalpel({
-	   target: res,
+	target: res,
   path: ['data.article.0', 'response.msg'],
   success:  (article, msg) => {
   	console.log('keys=>array=>output:', article, msg);
@@ -180,6 +178,7 @@ jscalpel({
 })
 ```
 #### 4.dynamic path
+
 ```
 jscalpel({
   target: res,
@@ -200,6 +199,7 @@ jscalpel({
   }
 });
 ```
+
 #### 5.use plugins
 ```
 const logicMap = {
