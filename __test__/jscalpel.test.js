@@ -33,6 +33,16 @@ describe('jscalpel test', () => {
             }
         })
     });
+    test('test path is function', () => {
+        jscalpel({
+            target: res,
+            path: () => ['response.msg', 'data.articles.0.id'],
+            success: (msg, id) => {
+                expect(msg).toBe('ok');
+                expect(id).toBe(1);
+            }
+        }) 
+    })
     test('test prefix', () => {
         jscalpel({
             target: res,
@@ -62,5 +72,28 @@ describe('jscalpel test', () => {
                 expect(no).toBeUndefined();
             }
         }); 
+    })
+    test('test return value', () => {
+        const no = jscalpel({
+            target: res,
+            prefix: 'data',
+            path: ['no'],
+            success: no => no,
+        });
+        const returnVal = jscalpel({
+            target: res,
+            prefix: 'data',
+            path: ['articles.0.text', 'total'],
+            success: (text, total) => {
+                return {
+                    text,
+                    total
+                }
+            }
+        });
+        expect(returnVal).toEqual({
+            text: 'react',
+            total: 1
+        });
     })
 })
