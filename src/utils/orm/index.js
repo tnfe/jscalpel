@@ -20,7 +20,7 @@ const jscalpelORM = (source = {}, rules, defaultValue) => {
       target: source,
     });
     targetPath.forEach((path, index) => {
-      if (path !== '__extraInfo') {
+      if (path !== '_extraInfo') {
         jscalpelIns.set(path, typeof jscalpelSourceIns.get(path) === 'undefined' ? jscalpelSourceIns.get(rules[path]) : jscalpelSourceIns.get(path));
       }
     });
