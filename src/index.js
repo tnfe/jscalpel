@@ -105,7 +105,7 @@ class JscalpelCore {
     }
     if (Array.isArray(path)) {
       path.forEach((ph, index) => {
-        self._setOrDel(path, void 0);
+        self._setOrDel(ph, void 0);
       });
     } else {
       self._setOrDel(path, void 0);
