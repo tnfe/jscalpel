@@ -108,7 +108,7 @@ class JscalpelCore {
         self._setOrDel(path, void 0);
       });
     } else {
-      self._setOrDel(ph, void 0);
+      self._setOrDel(path, void 0);
     }
   }
 }
