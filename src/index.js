@@ -49,7 +49,7 @@ class JscalpelCore {
     if (typeof path !== "string") {
       return "";
     }
-    return path;
+    return path.replace(/\s/g, '');
   }
 
   // 扩展和设置值
