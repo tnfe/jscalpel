@@ -14,7 +14,7 @@ class JscalpelCore {
     let keyPaths = this._fallbackpath(path).split(".");
     for (let i = 0, len = keyPaths.length; i < len; i++) {
       result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
-      if (typeof result === ) {
+      if (typeof result === void 0) {
         return result;
       }
     }
