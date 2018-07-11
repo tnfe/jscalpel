@@ -13,9 +13,13 @@ class JscalpelCore {
     let epTarget = this._target;
     let keyPaths = this._fallbackpath(path).split(".");
     for (let i = 0, len = keyPaths.length; i < len; i++) {
-      result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
-      if (result === void 0) {
-        return result;
+      try {
+        result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
+        if (result === void 0) {
+          return result;
+        }
+      } catch (err) {
+        return void 0;
       }
     }
     return result;
