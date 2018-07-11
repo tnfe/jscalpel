@@ -7,12 +7,6 @@ class JscalpelCore {
     this._error = error;
     this._returnedValue = returnedValue;
   }
-  _isBreakGo(output) {
-    if (typeof output !== 'string' || typeof output !== 'object') {
-      return true;
-    }
-    return false;
-  }
   _getValueByPath(path) {
     const context = this;
     let result = void 0;
