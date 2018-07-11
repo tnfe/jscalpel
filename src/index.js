@@ -7,17 +7,20 @@ class JscalpelCore {
     this._error = error;
     this._returnedValue = returnedValue;
   }
-
+  _isBreakGo(output) {
+    if (typeof output !== 'string' || typeof output !== 'object') {
+      return true;
+    }
+    return false;
+  }
   _getValueByPath(path) {
+    const context = this;
     let result = void 0;
     let epTarget = this._target;
     let keyPaths = this._fallbackpath(path).split(".");
     for (let i = 0, len = keyPaths.length; i < len; i++) {
       try {
         result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
-        if (result === void 0) {
-          return result;
-        }
       } catch (err) {
         return void 0;
       }
@@ -163,9 +166,10 @@ const jscalpel = (
     let result = target;
     let parseingPaths = autoCompletePath(path).split(".");
     for (let i = 0, len = parseingPaths.length; i < len; i++) {
-      result = result[parseingPaths[i]];
-      if (result === undefined) {
-        return result;
+      try {
+        result = result[parseingPaths[i]];
+      } catch (err) {
+        return void 0;
       }
     }
     return result;

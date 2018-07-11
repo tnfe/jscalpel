@@ -2,7 +2,7 @@ const jscalpel = require('../dist').default;
 const res = {
     response: {
         msg: 'ok',
-        code: 1,
+        code: null,
     },
     data: {
         articles: [{
@@ -47,10 +47,10 @@ describe('jscalpel test', () => {
         jscalpel({
             target: res,
             prefix: 'response',
-            path: ['msg', 'code'],
+            path: ['msg', 'code.status'],
             success: (msg, code) => {
                 expect(msg).toBe('ok');
-                expect(code).toBe(1);
+                expect(code).toBe(void 0);
             }
         });
         jscalpel({
