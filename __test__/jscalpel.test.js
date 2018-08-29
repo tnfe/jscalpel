@@ -1,4 +1,5 @@
 const jscalpel = require('../dist').default;
+const jscalpelGet = require('../dist').get;
 const res = {
     response: {
         msg: 'ok',
@@ -22,6 +23,16 @@ describe('jscalpel test', () => {
                 expect(msg).toBe('ok');
             }
         })
+    });
+    test('test jscalpel get', () => {
+        const returnVal = jscalpelGet(res, 'response.msg', 'get');
+        const returnVal1 = jscalpelGet(res, 'response.code.msg', 'get');
+        expect(returnVal).toBe('ok');
+        expect(returnVal1).toBe('get');
+    });
+    test('test jscalpel get null', () => {
+        const returnVal1 = jscalpelGet(res, 'response.code.msg', 'get');
+        expect(returnVal1).toBe('get');
     });
     test('test path is array', () => {
         jscalpel({

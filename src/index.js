@@ -279,6 +279,10 @@ const jscalpel = (
   });
 };
 
+const get = (target, path, defaultValue) => jscalpel({
+  target,
+}).get(path) || defaultValue;
+
 export default jscalpel;
 
-export { jscalpelType, jscalpelLogic, jscalpelORM };
+export { jscalpelType, jscalpelLogic, jscalpelORM, get };
