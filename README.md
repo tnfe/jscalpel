@@ -119,7 +119,8 @@ var data = {
     }
   }
 }
-
+// super easy
+jscalpel.get(data, 'data.response.code'); // return '1'
 // bind data
 var jscalpelIns = jscalpel({
   target: data
