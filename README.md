@@ -237,6 +237,13 @@ Add jscalpelLogic plugin, reduce ifelse, make run logic configurable
 #### 2018.3.08
 
 add orm 
+#### 2018.9.04
+
+add get method
+```javascript
+import { get } from 'jscalpel';
+// get(data, path ,defaultValue);
+```
 
 ## License
 
