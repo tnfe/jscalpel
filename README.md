@@ -2,6 +2,8 @@
 ![](./logo/logox3.png)
 
 A small feature library that makes it easier to manipulate objects
+[![npm package](https://img.shields.io/npm/v/jscalpel.svg)](https://www.npmjs.org/package/jscalpel)
+[![NPM downloads](http://img.shields.io/npm/dm/jscalpel.svg)](https://npmjs.org/package/jscalpel)
 ## Overview
 
 It is tiny but very useful and can help you handle javascript native objects. Data-driven interface development is very common today, we are in the [angular](https://github.com/angular/angular), [react](http://www.github.com/facebook/react), [vue](http://www.github.com/vuejs/vue) will encounter a lot of object processing, including set the default value, query, assignment, etc., [jscalpel](http://www.github.com/ihtml5/jscalpel) is born for this scene.
