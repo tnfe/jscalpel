@@ -2,6 +2,7 @@
 ![](./logo/logox3.png)
 
 A small feature library that makes it easier to manipulate objects
+
 [![npm package](https://img.shields.io/npm/v/jscalpel.svg)](https://www.npmjs.org/package/jscalpel)
 [![NPM downloads](http://img.shields.io/npm/dm/jscalpel.svg)](https://npmjs.org/package/jscalpel)
 ## Overview
