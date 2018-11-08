@@ -9,6 +9,7 @@ const res = {
         articles: [{
             id: 1,
             text: 'react',
+            code: 0,
         }],
         total: 1,
     }
@@ -23,6 +24,10 @@ describe('jscalpel test', () => {
                 expect(msg).toBe('ok');
             }
         })
+    });
+    test('test jscalpel get 0', () => {
+        const returnVal = jscalpelGet(res, 'data.articles.0.code');
+        expect(returnVal).toBe(0);
     });
     test('test jscalpel get', () => {
         const returnVal = jscalpelGet(res, 'response.msg', 'get');
