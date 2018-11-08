@@ -279,9 +279,15 @@ const jscalpel = (
   });
 };
 
-const get = (target, path, defaultValue) => jscalpel({
-  target,
-}).get(path) || defaultValue;
+const get = (target, path, defaultValue) => {
+  const returnedValue = jscalpel({
+    target,
+  }).get(path);
+  if (typeof returnedValue === 'undefined') {
+     return defaultValue;
+  }
+  return returnedValue;
+};
 
 export default jscalpel;
 
