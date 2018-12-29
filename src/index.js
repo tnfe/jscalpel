@@ -1,6 +1,27 @@
 import jscalpelType from "./plugins/jscalpeltype";
 import jscalpelLogic from "./plugins/jscalpellogic";
 import { jscalpelORM, isObject, nativeToString } from "./utils";
+
+const dcopy = obj => {
+  const returnObj = {};
+  let tempArr = [];
+  if (nativeToString.call(obj) === "[object Object]") {
+    Object.keys(obj).forEach((path, index) => {
+      if (Array.isArray(obj[path])) {
+        obj[path].forEach((value, index) => {
+          tempArr.push(value);
+        });
+        returnObj[path] = tempArr;
+        tempArr = [];
+      } else if (nativeToString.call(obj[path] === "[object Object]")) {
+        returnObj[path] = dcopy(obj[path]);
+      }
+    });
+    return returnObj;
+  } else {
+    return obj;
+  }
+};
 class JscalpelCore {
   constructor({ target, returnedValue, error }) {
     this._target = target;
@@ -131,27 +152,6 @@ const jscalpel = (
 ) => {
   const compatCb = success || callback;
   const enablePrefix = prefix ? true : false;
-  const deepCopy = obj => {
-    const returnObj = {};
-    let tempArr = [];
-    if (nativeToString.call(obj) === "[object Object]") {
-      Object.keys(obj).forEach((path, index) => {
-        if (Array.isArray(obj[path])) {
-          obj[path].forEach((value, index) => {
-            tempArr.push(value);
-          });
-          returnObj[path] = tempArr;
-          tempArr = [];
-        } else if (nativeToString.call(obj[path] === "[object Object]")) {
-          returnObj[path] = deepCopy(obj[path]);
-        }
-      });
-      return returnObj;
-    } else {
-      return obj;
-    }
-  };
-
   const autoCompletePath = path => {
     return `${prefix && enablePrefix ? `${prefix}.${path}` : `${path}`}`;
   };
@@ -210,7 +210,7 @@ const jscalpel = (
     try {
       epTarget = typeof target === "string" ? JSON.parse(target) : target;
       if (deep) {
-        epTarget = deepCopy(epTarget);
+        epTarget = dcopy(epTarget);
       }
 
       if (
@@ -288,7 +288,9 @@ const get = (target, path, defaultValue) => {
   }
   return returnedValue;
 };
-
+const set = (target, path, value) => jscalpel({
+    target,
+  }).set(path, value);
 export default jscalpel;
 
-export { jscalpelType, jscalpelLogic, jscalpelORM, get };
+export { jscalpelType, jscalpelLogic, jscalpelORM, get, set, dcopy };
