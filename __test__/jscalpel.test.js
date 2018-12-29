@@ -1,5 +1,8 @@
 const jscalpel = require('../dist').default;
 const jscalpelGet = require('../dist').get;
+const jscalpelSet = require('../dist').set;
+const jscalpeldCopy = require('../dist').dcopy;
+
 const res = {
     response: {
         msg: 'ok',
@@ -14,8 +17,17 @@ const res = {
         total: 1,
     }
 }
+const newRes = jscalpeldCopy(res);
+
 describe('jscalpel test', () => {
     beforeAll(() => {});
+    test('test newRes is object', () => {
+        expect(jscalpeldCopy(res) !== res).toBe(true);
+    });
+    test('test set data.articles 0', () => {
+        jscalpelSet(res, 'res.data.articles.0.id', 0);
+        expect(jscalpelGet(res, 'res.data.articles.0.id') === 0).toBe(true);
+    });
     test('test path is string', () => {
         jscalpel({
             target: res,

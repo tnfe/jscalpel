@@ -156,7 +156,7 @@ const jscalpel = (
     return `${prefix && enablePrefix ? `${prefix}.${path}` : `${path}`}`;
   };
 
-  const getValueByPath = function({ path, target, plugins, index }) {
+  const getValueByPath = function ({ path, target, plugins, index }) {
     let result = target;
     let parseingPaths = autoCompletePath(path).split(".");
     for (let i = 0, len = parseingPaths.length; i < len; i++) {
@@ -284,13 +284,14 @@ const get = (target, path, defaultValue) => {
     target,
   }).get(path);
   if (typeof returnedValue === 'undefined') {
-     return defaultValue;
+    return defaultValue;
   }
   return returnedValue;
 };
+
 const set = (target, path, value) => jscalpel({
-    target,
-  }).set(path, value);
+  target,
+}).set(path, value);
 export default jscalpel;
 
 export { jscalpelType, jscalpelLogic, jscalpelORM, get, set, dcopy };
