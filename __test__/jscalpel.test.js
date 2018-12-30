@@ -1,7 +1,7 @@
 const jscalpel = require('../dist').default;
 const jscalpelGet = require('../dist').get;
 const jscalpelSet = require('../dist').set;
-const jscalpeldCopy = require('../dist').dcopy;
+const jscalpeldCopy = require('../dist').toCopy;
 
 const res = {
     response: {
