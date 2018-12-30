@@ -2,7 +2,7 @@ import jscalpelType from "./plugins/jscalpeltype";
 import jscalpelLogic from "./plugins/jscalpellogic";
 import { jscalpelORM, isObject, nativeToString } from "./utils";
 
-const dcopy = obj => {
+const toCopy = obj => {
   const returnObj = {};
   let tempArr = [];
   if (nativeToString.call(obj) === "[object Object]") {
@@ -14,7 +14,7 @@ const dcopy = obj => {
         returnObj[path] = tempArr;
         tempArr = [];
       } else if (nativeToString.call(obj[path] === "[object Object]")) {
-        returnObj[path] = dcopy(obj[path]);
+        returnObj[path] = toCopy(obj[path]);
       }
     });
     return returnObj;
@@ -210,7 +210,7 @@ const jscalpel = (
     try {
       epTarget = typeof target === "string" ? JSON.parse(target) : target;
       if (deep) {
-        epTarget = dcopy(epTarget);
+        epTarget = toCopy(epTarget);
       }
 
       if (
@@ -294,4 +294,4 @@ const set = (target, path, value) => jscalpel({
 }).set(path, value);
 export default jscalpel;
 
-export { jscalpelType, jscalpelLogic, jscalpelORM, get, set, dcopy };
+export { jscalpelType, jscalpelLogic, jscalpelORM, get, set, toCopy };
