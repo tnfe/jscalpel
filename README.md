@@ -124,6 +124,10 @@ var data = {
 }
 // super easy
 jscalpel.get(data, 'data.response.code'); // return 1
+// deep copy object
+jscalpel.toCopy(data) !== data; // return true;
+jscalpel.set(data, 'data.response.code', 0);
+jscalpel.get(data, 'data.response.code') // return 0;
 // bind data
 var jscalpelIns = jscalpel({
   target: data
@@ -247,7 +251,15 @@ add get method
 import { get } from 'jscalpel';
 // get(data, path ,defaultValue);
 ```
-
+#### 2018.12.30
+```javascript
+import { set, get, toCopy } from 'jscalpel';
+// deep copy object
+toCopy(data) !== data; // return true;
+// set path value
+set(data, 'data.response.code', 0);
+get(data, 'data.response.code') // return 0;
+```
 ## License
 
 [The MIT License](https://opensource.org/licenses/MIT).
