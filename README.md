@@ -7,14 +7,14 @@ A small feature library that makes it easier to manipulate objects
 [![NPM downloads](http://img.shields.io/npm/dm/jscalpel.svg)](https://npmjs.org/package/jscalpel)
 ## Overview
 
-It is tiny but very useful and can help you handle javascript native objects. Data-driven interface development is very common today, we are in the [angular](https://github.com/angular/angular), [react](http://www.github.com/facebook/react), [vue](http://www.github.com/vuejs/vue) will encounter a lot of object processing, including set the default value, query, assignment, etc., [jscalpel](http://www.github.com/ihtml5/jscalpel) is born for this scene.
+It is tiny but very useful and can help you handle javascript native objects. Data-driven interface development is very common today, we are in the [angular](https://github.com/angular/angular), [react](http://www.github.com/facebook/react), [vue](http://www.github.com/vuejs/vue) will encounter a lot of object processing, including set the default value, query, assignment, etc., [jscalpel](http://www.github.com/tnfe/jscalpel) is born for this scene.
 
 jscalpel is little poor, gzip less than **3k**, so a library you can use it anytime, anywhere without worrying about anything.
 
 ## Document
 
-#### View the document please visit [https://ihtml5.github.io/jscalpel/](https://ihtml5.github.io/jscalpel/)
-[中文文档](https://ihtml5.github.io/jscalpel/index_zh.html)
+#### View the document please visit [https://tnfe.github.io/jscalpel/](https://tnfe.github.io/jscalpel/)
+[中文文档](https://tnfe.github.io/jscalpel/index_zh.html)
 
 ## Installation
 
@@ -231,7 +231,7 @@ jscalpel({
 })
 ```
 ## Related projects
-[jscalpel-orm](https://github.com/ihtml5/jscalpel-orm)
+[jscalpel-orm](https://github.com/tnfe/jscalpel-orm)
 
 It is convenient for you to extract the required fields from one object to generate another object.
 
