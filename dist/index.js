@@ -1,1 +1,523 @@
-!function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"function"==typeof define&&define.amd?define(["exports"],e):e(t.jscalpel={})}(this,function(t){"use strict";var e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},n=(function(){function t(t){this.value=t}function e(e){function n(o,a){try{var u=e[o](a),i=u.value;i instanceof t?Promise.resolve(i.value).then(function(t){n("next",t)},function(t){n("throw",t)}):r(u.done?"return":"normal",u.value)}catch(t){r("throw",t)}}function r(t,e){switch(t){case"return":o.resolve({value:e,done:!0});break;case"throw":o.reject(e);break;default:o.resolve({value:e,done:!1})}(o=o.next)?n(o.key,o.arg):a=null}var o,a;this._invoke=function(t,e){return new Promise(function(r,u){var i={key:t,arg:e,resolve:r,reject:u,next:null};a?a=a.next=i:(o=a=i,n(t,e))})},"function"!=typeof e.return&&(this.return=void 0)}"function"==typeof Symbol&&Symbol.asyncIterator&&(e.prototype[Symbol.asyncIterator]=function(){return this}),e.prototype.next=function(t){return this._invoke("next",t)},e.prototype.throw=function(t){return this._invoke("throw",t)},e.prototype.return=function(t){return this._invoke("return",t)}}(),function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}),r=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}(),o=Object.prototype.toString,a=function(t){return"[object Object]"===o.call(t)},u=function t(e){var n={},r=[];return"[object Object]"===o.call(e)?(Object.keys(e).forEach(function(a,u){Array.isArray(e[a])?(e[a].forEach(function(t,e){r.push(t)}),n[a]=r,r=[]):o.call("[object Object]"===e[a])&&(n[a]=t(e[a]))}),n):e},i=function(){function t(e){var r=e.target,o=e.returnedValue,a=e.error;n(this,t),this._target=r,this._error=a,this._returnedValue=o}return r(t,[{key:"_getValueByPath",value:function(t){for(var e=void 0,n=this._target,r=this._fallbackpath(t).split("."),o=0,a=r.length;o<a;o++)try{e=e?e[r[o]]:n[r[o]]}catch(t){return}return e}},{key:"_getValue",value:function(t){var e=void 0,n=[],r=this;return"string"==typeof t&&t.length>0?this._getValueByPath(t):"[object Array]"===o.call(t)?(t.forEach(function(t,o){"string"==typeof t&&(e=r._getValueByPath(t),n.push(e))}),0===n.length?null:n):null}},{key:"get",value:function(t){return t?this._getValueByPath(t):this._returnedValue}},{key:"_fallbackpath",value:function(t){return"string"!=typeof t?"":t.replace(/\s/g,"")}},{key:"_extend",value:function(t,e){if(a(t))for(var n=t,r=e.split("."),o=r.length,u=0;u<o;u++)void 0===n[r[u]]&&(n[r[u]]={}),n=(arguments.length<=2?0:arguments.length-2)>0&&u===o-1?n[r[u]]=arguments.length<=2?void 0:arguments[2]:n[r[u]]}},{key:"_setOrDel",value:function(t,e){var n=this._fallbackpath(t);""!==n?this._extend(this._target,n,e):"function"==typeof this._error&&this._error(this._target,t)}},{key:"set",value:function(t,e){var n=this;a(t)?Object.keys(t).forEach(function(e,r){n._setOrDel(e,t[e])}):this._setOrDel(t,e)}},{key:"has",value:function(t){return!!this._getValueByPath(t)}},{key:"del",value:function(t){var e=this;t&&(Array.isArray(t)?t.forEach(function(t,n){e._setOrDel(t,void 0)}):e._setOrDel(t,void 0))}}]),t}(),c=function(t,e){var n=t.target,r=t.path,a=t.keys,c=t.dynamicKeys,l=t.prefix,f=t.callback,s=t.success,y=t.deep,p=t.plugins,h=t.error,v=s||f,g=!!l,d=function(t){return l&&g?l+"."+t:""+t},b=function(t){for(var e=t.path,n=t.target,r=d(e).split("."),o=0,a=r.length;o<a;o++)try{n=n[r[o]]}catch(t){return}return n},m=function(t){var e=t.plugins,n=t.name,r={value:t.value,name:n};e&&Array.isArray(e)&&e.length&&e.forEach(function(t,e){t(r)})},_=void 0,k=void 0,j=function(t){var e=null;try{if(e="string"==typeof t?JSON.parse(t):t,y&&(e=u(e)),"[object Object]"!==o.call(e)&&!Array.isArray(e))return void("function"==typeof h&&h(e))}catch(t){return void("function"==typeof h&&h(e,t))}return e}(n),O=[],x=v?function(t){var e=/((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm,n=/=[^,]+/gm,r=/=>.*$/gm,o=t.toString().replace(e,"").replace(r,"").replace(n,""),a=o.slice(o.indexOf("(")+1,o.indexOf(")")).match(/([^\s,]+)/g);return null===a?[]:a}(v):[];return"string"==typeof(r=function(t){var e=t.path,n=void 0===e?"":e,r=t.keys,o=t.dynamicKeys;return r||"function"==typeof o?n=r||o(l):"function"==typeof n&&(n=n(l)),n}({path:r,keys:a,dynamicKeys:c}))&&r.length>0?(k=b({path:r,target:n}),m({plugins:p,name:x[0],value:k}),_=v&&"function"==typeof v?v.call(null,k,j,r,e):v):"[object Array]"===o.call(r)&&(r.forEach(function(t,e){"string"==typeof t&&(k=b({path:t,target:n}),m({plugins:p,value:k,name:x[e]}),O.push(k)),k=void 0}),O.push(j,r,e),_=v&&"function"==typeof v?v.apply(null,O):v),"function"==typeof f||"function"==typeof s?_:new i({target:j,error:h})};t.default=c,t.jscalpelType=function(t){var n=t.value,r=t.name;return-1!==["string","undefined","function","number","boolean"].indexOf(void 0===n?"undefined":e(n))?{value:n,type:void 0===n?"undefined":e(n)}:n+""=="null"?{value:n,type:"null"}:Array.isArray(n)?{value:n,type:"array",length:n.length}:"[object Object]"===Object.prototype.toString.call(n)?{value:n,name:r,type:"object",keys:Object.keys(n),values:Object.values(n)}:void 0},t.jscalpelLogic=function(t){return function(e){var n=e.value,r=e.name;return t[r]&&c({target:t,prefix:""+r,path:["match","success"],callback:function(t,e){return t({value:n,name:r})&&e({value:n,name:r}),n}}),n}},t.jscalpelORM=function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},e=arguments[1],n=arguments[2];if(!a(t))return console.error("source为"+t+",不是对象"),n;if(!a(e))return console.error("rules为"+e+",不是对象"),n;try{var r=Object.keys(e),o=e._extraInfo||{},u={},i=c({target:u}),l=c({target:t});return r.forEach(function(t,n){"_extraInfo"!==t&&i.set(t,void 0===l.get(t)?l.get(e[t]):l.get(t))}),Object.assign(u,o)}catch(t){return console.error("请检查source和rules配置，两者都必须为对象!"),n}},t.get=function(t,e,n){var r=c({target:t}).get(e);return void 0===r?n:r},t.set=function(t,e,n){return c({target:t}).set(e,n)},t.toCopy=u,Object.defineProperty(t,"__esModule",{value:!0})});
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.jscalpel = {}));
+}(this, (function (exports) { 'use strict';
+
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  var jscalpelType = function jscalpelType(_ref) {
+    var value = _ref.value,
+        name = _ref.name;
+    var simpleTypes = ['string', 'undefined', 'function', 'number', 'boolean'];
+
+    if (simpleTypes.indexOf(_typeof(value)) !== -1) {
+      return {
+        value: value,
+        type: _typeof(value)
+      };
+    }
+
+    if (value + '' === 'null') {
+      return {
+        value: value,
+        type: 'null'
+      };
+    }
+
+    if (Array.isArray(value)) {
+      return {
+        value: value,
+        type: 'array',
+        length: value.length
+      };
+    }
+
+    if (Object.prototype.toString.call(value) === '[object Object]') {
+      return {
+        value: value,
+        name: name,
+        type: 'object',
+        keys: Object.keys(value),
+        values: Object.values(value)
+      };
+    }
+  };
+
+  var jscalpelLogic = function jscalpelLogic(logicMap) {
+    return function (_ref) {
+      var value = _ref.value,
+          name = _ref.name;
+
+      if (logicMap[name]) {
+        jscalpel({
+          target: logicMap,
+          prefix: "".concat(name),
+          path: ['match', 'success'],
+          callback: function callback(match, success) {
+            match({
+              value: value,
+              name: name
+            }) && success({
+              value: value,
+              name: name
+            });
+            return value;
+          }
+        });
+      }
+
+      return value;
+    };
+  };
+
+  var jscalpelORM = function jscalpelORM() {
+    var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var rules = arguments.length > 1 ? arguments[1] : undefined;
+    var defaultValue = arguments.length > 2 ? arguments[2] : undefined;
+
+    if (!isObject(source)) {
+      console.error("source\u4E3A".concat(source, ",\u4E0D\u662F\u5BF9\u8C61"));
+      return defaultValue;
+    }
+
+    if (!isObject(rules)) {
+      console.error("rules\u4E3A".concat(rules, ",\u4E0D\u662F\u5BF9\u8C61"));
+      return defaultValue;
+    }
+
+    try {
+      var targetPath = Object.keys(rules);
+
+      var _extraInfo = rules._extraInfo || {};
+
+      var target = {};
+      var jscalpelIns = jscalpel({
+        target: target
+      });
+      var jscalpelSourceIns = jscalpel({
+        target: source
+      });
+      targetPath.forEach(function (path, index) {
+        if (path !== '_extraInfo') {
+          jscalpelIns.set(path, typeof jscalpelSourceIns.get(path) === 'undefined' ? jscalpelSourceIns.get(rules[path]) : jscalpelSourceIns.get(path));
+        }
+      });
+      return Object.assign(target, _extraInfo);
+    } catch (e) {
+      console.error('请检查source和rules配置，两者都必须为对象!');
+      return defaultValue;
+    }
+  };
+
+  var nativeToString = Object.prototype.toString;
+
+  var isObject = function isObject(obj) {
+    return nativeToString.call(obj) === '[object Object]';
+  };
+
+  var toCopy = function toCopy(obj) {
+    var returnObj = {};
+    var tempArr = [];
+
+    if (nativeToString.call(obj) === "[object Object]") {
+      Object.keys(obj).forEach(function (path, index) {
+        if (Array.isArray(obj[path])) {
+          obj[path].forEach(function (value, index) {
+            tempArr.push(value);
+          });
+          returnObj[path] = tempArr;
+          tempArr = [];
+        } else if (nativeToString.call(obj[path] === "[object Object]")) {
+          returnObj[path] = toCopy(obj[path]);
+        }
+      });
+      return returnObj;
+    } else {
+      return obj;
+    }
+  };
+
+  var JscalpelCore = /*#__PURE__*/function () {
+    function JscalpelCore(_ref) {
+      var target = _ref.target,
+          returnedValue = _ref.returnedValue,
+          error = _ref.error;
+
+      _classCallCheck(this, JscalpelCore);
+
+      this._target = target;
+      this._error = error;
+      this._returnedValue = returnedValue;
+    }
+
+    _createClass(JscalpelCore, [{
+      key: "_getValueByPath",
+      value: function _getValueByPath(path) {
+        var result = void 0;
+        var epTarget = this._target;
+
+        var keyPaths = this._fallbackpath(path).split(".");
+
+        for (var i = 0, len = keyPaths.length; i < len; i++) {
+          try {
+            result = result ? result[keyPaths[i]] : epTarget[keyPaths[i]];
+          } catch (err) {
+            return void 0;
+          }
+        }
+
+        return result;
+      }
+    }, {
+      key: "_getValue",
+      value: function _getValue(path) {
+        var result = void 0;
+        this._target;
+        var pResult = [];
+        var self = this;
+
+        if (typeof path === "string" && path.length > 0) {
+          return this._getValueByPath(path);
+        } else if (nativeToString.call(path) === "[object Array]") {
+          path.forEach(function (singlePath, idx) {
+            if (typeof singlePath === "string") {
+              result = self._getValueByPath(singlePath);
+              pResult.push(result);
+            }
+          });
+
+          if (pResult.length === 0) {
+            return null;
+          }
+
+          return pResult;
+        }
+
+        return null;
+      }
+    }, {
+      key: "get",
+      value: function get(path) {
+        return path ? this._getValueByPath(path) : this._returnedValue;
+      }
+    }, {
+      key: "_fallbackpath",
+      value: function _fallbackpath(path) {
+        if (typeof path !== "string") {
+          return "";
+        }
+
+        return path.replace(/\s/g, "");
+      } // 扩展和设置值
+
+    }, {
+      key: "_extend",
+      value: function _extend(ns, ns_string) {
+        if (isObject(ns)) {
+          var current = ns;
+          var parts = ns_string.split(".");
+          var pl = parts.length;
+
+          for (var i = 0; i < pl; i++) {
+            if (typeof current[parts[i]] === "undefined") {
+              current[parts[i]] = {};
+            }
+
+            if ((arguments.length <= 2 ? 0 : arguments.length - 2) > 0 && i === pl - 1) {
+              current = current[parts[i]] = arguments.length <= 2 ? undefined : arguments[2];
+            } else {
+              current = current[parts[i]];
+            }
+          }
+        }
+      }
+    }, {
+      key: "_setOrDel",
+      value: function _setOrDel(path, value) {
+        var fallbackPath = this._fallbackpath(path);
+
+        if (fallbackPath === "") {
+          if (typeof this._error === "function") {
+            this._error(this._target, path);
+          }
+
+          return;
+        }
+
+        this._extend(this._target, fallbackPath, value);
+      }
+    }, {
+      key: "set",
+      value: function set(path, value) {
+        var _this = this;
+
+        if (isObject(path)) {
+          Object.keys(path).forEach(function (key, index) {
+            _this._setOrDel(key, path[key]);
+          });
+        } else {
+          this._setOrDel(path, value);
+        }
+      }
+    }, {
+      key: "has",
+      value: function has(path) {
+        var returnedValue = this._getValueByPath(path);
+
+        if (!returnedValue) {
+          return false;
+        }
+
+        return true;
+      }
+    }, {
+      key: "del",
+      value: function del(path) {
+        var self = this;
+
+        if (!path) {
+          return;
+        }
+
+        if (Array.isArray(path)) {
+          path.forEach(function (ph, index) {
+            self._setOrDel(ph, void 0);
+          });
+        } else {
+          self._setOrDel(path, void 0);
+        }
+      }
+    }]);
+
+    return JscalpelCore;
+  }();
+
+  var jscalpel = function jscalpel(_ref2, defaultOpts) {
+    var target = _ref2.target,
+        path = _ref2.path,
+        keys = _ref2.keys,
+        dynamicKeys = _ref2.dynamicKeys,
+        prefix = _ref2.prefix,
+        callback = _ref2.callback,
+        success = _ref2.success,
+        deep = _ref2.deep,
+        plugins = _ref2.plugins,
+        error = _ref2.error;
+    var compatCb = success || callback;
+    var enablePrefix = prefix ? true : false;
+
+    var autoCompletePath = function autoCompletePath(path) {
+      return "".concat(prefix && enablePrefix ? "".concat(prefix, ".").concat(path) : "".concat(path));
+    };
+
+    var getValueByPath = function getValueByPath(_ref3) {
+      var path = _ref3.path,
+          target = _ref3.target;
+          _ref3.plugins;
+          _ref3.index;
+      var result = target;
+      var parseingPaths = autoCompletePath(path).split(".");
+
+      for (var i = 0, len = parseingPaths.length; i < len; i++) {
+        try {
+          result = result[parseingPaths[i]];
+        } catch (err) {
+          return void 0;
+        }
+      }
+
+      return result;
+    };
+
+    var executePlugins = function executePlugins(_ref4) {
+      var plugins = _ref4.plugins,
+          name = _ref4.name,
+          value = _ref4.value;
+      var willPluginInfo = {
+        value: value,
+        name: name
+      };
+
+      if (plugins && Array.isArray(plugins) && plugins.length) {
+        plugins.forEach(function (plugin, index) {
+          plugin(willPluginInfo);
+        });
+      }
+    };
+
+    var getParameterNames = function getParameterNames(fn) {
+      var COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+      var DEFAULT_PARAMS = /=[^,]+/gm;
+      var FAT_ARROWS = /=>.*$/gm;
+      var code = fn.toString().replace(COMMENTS, "").replace(FAT_ARROWS, "").replace(DEFAULT_PARAMS, "");
+      var result = code.slice(code.indexOf("(") + 1, code.indexOf(")")).match(/([^\s,]+)/g);
+      return result === null ? [] : result;
+    };
+
+
+    var transformAnyToObj = function transformAnyToObj(target) {
+      var epTarget = null;
+
+      try {
+        epTarget = typeof target === "string" ? JSON.parse(target) : target;
+
+        if (deep) {
+          epTarget = toCopy(epTarget);
+        }
+
+        if (nativeToString.call(epTarget) !== "[object Object]" && !Array.isArray(epTarget)) {
+          typeof error === "function" && error(epTarget);
+          return;
+        }
+      } catch (err) {
+        typeof error === "function" && error(epTarget, err);
+        return;
+      }
+
+      return epTarget;
+    };
+
+    var getPaths = function getPaths(_ref5) {
+      var _ref5$path = _ref5.path,
+          path = _ref5$path === void 0 ? "" : _ref5$path,
+          keys = _ref5.keys,
+          dynamicKeys = _ref5.dynamicKeys;
+
+      if (keys || typeof dynamicKeys === "function") {
+        path = keys || dynamicKeys(prefix);
+      } else if (typeof path === "function") {
+        path = path(prefix);
+      }
+
+      return path;
+    };
+
+    var defaultValue = void 0;
+    var result = void 0;
+    var epTarget = transformAnyToObj(target);
+    var pResult = [];
+    var cbParams = compatCb ? getParameterNames(compatCb) : [];
+    path = getPaths({
+      path: path,
+      keys: keys,
+      dynamicKeys: dynamicKeys
+    });
+
+    if (typeof path === "string" && path.length > 0) {
+      result = getValueByPath({
+        path: path,
+        target: target
+      });
+      executePlugins({
+        plugins: plugins,
+        name: cbParams[0],
+        value: result
+      });
+
+      if (compatCb && typeof compatCb === "function") {
+        defaultValue = compatCb.call(null, result, epTarget, path, defaultOpts);
+      } else {
+        defaultValue = compatCb;
+      }
+    } else if (nativeToString.call(path) === "[object Array]") {
+      path.forEach(function (singlePath, idx) {
+        if (typeof singlePath === "string") {
+          result = getValueByPath({
+            path: singlePath,
+            target: target
+          });
+          executePlugins({
+            plugins: plugins,
+            value: result,
+            name: cbParams[idx]
+          });
+          pResult.push(result);
+        }
+
+        result = void 0;
+      });
+      pResult.push(epTarget, path, defaultOpts);
+
+      if (compatCb && typeof compatCb === "function") {
+        defaultValue = compatCb.apply(null, pResult);
+      } else {
+        defaultValue = compatCb;
+      }
+    }
+
+    if (typeof callback === "function" || typeof success === "function") {
+      return defaultValue;
+    }
+
+    return new JscalpelCore({
+      target: epTarget,
+      error: error
+    });
+  };
+
+  var get = function get(target, path, defaultValue) {
+    var returnedValue = jscalpel({
+      target: target
+    }).get(path);
+
+    if (typeof returnedValue === "undefined") {
+      return defaultValue;
+    }
+
+    return returnedValue;
+  };
+
+  var set = function set(target, path, value) {
+    return jscalpel({
+      target: target
+    }).set(path, value);
+  };
+
+  exports['default'] = jscalpel;
+  exports.get = get;
+  exports.jscalpelLogic = jscalpelLogic;
+  exports.jscalpelORM = jscalpelORM;
+  exports.jscalpelType = jscalpelType;
+  exports.set = set;
+  exports.toCopy = toCopy;
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));

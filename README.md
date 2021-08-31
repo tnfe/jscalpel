@@ -260,6 +260,10 @@ toCopy(data) !== data; // return true;
 set(data, 'data.response.code', 0);
 get(data, 'data.response.code') // return 0;
 ```
+
+#### 2021.8.31
+
+publish 2.0.0
 ## License
 
 [The MIT License](https://opensource.org/licenses/MIT).

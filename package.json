@@ -1,8 +1,10 @@
 {
   "name": "jscalpel",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "A small feature library that makes it easier to manipulate objects",
   "main": "dist/index.js",
+  "module": "dist/index.js",
+  "jsnext:main": "dist/index.js",
   "scripts": {
     "watch": "browser-sync start --proxy='localhost:8080' --files='*.html, dist/*.js'",
     "build": "rollup -c --watch && http-server",
@@ -31,21 +33,25 @@
   },
   "homepage": "https://github.com/ihtml5/scalpel#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-jest": "^22.4.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
-    "http-server": "^0.10.0",
-    "jest": "^22.4.3",
+    "http-server": "^13.0.1",
+    "jest": "^27.1.0",
     "regenerator-runtime": "^0.11.1",
-    "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
-    "uglify-es": "^3.1.0"
+    "uglify-es": "^3.1.0",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "eslint-config-standard": "^16.0.3"
+  },
+  "dependencies": {
+    "@rollup/plugin-babel": "^5.3.0",
+    "rollup": "^2.56.3"
   }
 }
