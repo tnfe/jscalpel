@@ -2,7 +2,7 @@ import jscalpelType from "./plugins/jscalpeltype";
 import jscalpelLogic from "./plugins/jscalpellogic";
 import { jscalpelORM, isObject, nativeToString } from "./utils";
 
-const toCopy = obj => {
+const toCopy = (obj) => {
   const returnObj = {};
   let tempArr = [];
   if (nativeToString.call(obj) === "[object Object]") {
@@ -71,7 +71,7 @@ class JscalpelCore {
     if (typeof path !== "string") {
       return "";
     }
-    return path.replace(/\s/g, '');
+    return path.replace(/\s/g, "");
   }
 
   // 扩展和设置值
@@ -146,13 +146,13 @@ const jscalpel = (
     success,
     deep,
     plugins,
-    error
+    error,
   },
   defaultOpts
 ) => {
   const compatCb = success || callback;
   const enablePrefix = prefix ? true : false;
-  const autoCompletePath = path => {
+  const autoCompletePath = (path) => {
     return `${prefix && enablePrefix ? `${prefix}.${path}` : `${path}`}`;
   };
 
@@ -172,7 +172,7 @@ const jscalpel = (
   const executePlugins = ({ plugins, name, value }) => {
     let willPluginInfo = {
       value,
-      name
+      name,
     };
     if (plugins && Array.isArray(plugins) && plugins.length) {
       plugins.forEach((plugin, index) => {
@@ -180,10 +180,10 @@ const jscalpel = (
       });
     }
   };
-  const getParameterNames = fn => {
-    const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-    const DEFAULT_PARAMS = /=[^,]+/mg;
-    const FAT_ARROWS = /=>.*$/mg;
+  const getParameterNames = (fn) => {
+    const COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
+    const DEFAULT_PARAMS = /=[^,]+/gm;
+    const FAT_ARROWS = /=>.*$/gm;
     const code = fn
       .toString()
       .replace(COMMENTS, "")
@@ -205,7 +205,7 @@ const jscalpel = (
     }
   };
   //  try transform anything to object
-  const transformAnyToObj = target => {
+  const transformAnyToObj = (target) => {
     let epTarget = null;
     try {
       epTarget = typeof target === "string" ? JSON.parse(target) : target;
@@ -244,7 +244,7 @@ const jscalpel = (
   path = getPaths({
     path,
     keys,
-    dynamicKeys
+    dynamicKeys,
   });
   if (typeof path === "string" && path.length > 0) {
     result = getValueByPath({ path, target });
@@ -275,7 +275,7 @@ const jscalpel = (
   }
   return new JscalpelCore({
     target: epTarget,
-    error
+    error,
   });
 };
 
@@ -283,15 +283,16 @@ const get = (target, path, defaultValue) => {
   const returnedValue = jscalpel({
     target,
   }).get(path);
-  if (typeof returnedValue === 'undefined') {
+  if (typeof returnedValue === "undefined") {
     return defaultValue;
   }
   return returnedValue;
 };
 
-const set = (target, path, value) => jscalpel({
-  target,
-}).set(path, value);
+const set = (target, path, value) =>
+  jscalpel({
+    target,
+  }).set(path, value);
 export default jscalpel;
 
 export { jscalpelType, jscalpelLogic, jscalpelORM, get, set, toCopy };
